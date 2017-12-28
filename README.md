@@ -2,4 +2,4 @@
 
 This is my webpage
 
-Page is under construction
+I plan to create a blog in the future for most of the computer and data science problems.
