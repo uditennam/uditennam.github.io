@@ -7,6 +7,7 @@ body{
   background:rgba(255,255,255,1);
   position:sticky;
   top:0;
+  z-index:2;
 }
 
 .nav ul{
@@ -99,7 +100,7 @@ body{
 }
 
 .about h2{
-  margin-top:50px;
+  margin-top:80px;
   margin-bottom:30px;
   color:#d4af37;
   font-size:2.5em;
@@ -127,7 +128,7 @@ body{
 }
 
 .skills h2{
-  margin-top:50px;
+  margin-top:80px;
   color:#d4af37;
   font-size:2.5em;
   font-family: 'PT Serif', serif;
@@ -249,6 +250,7 @@ body{
 }
 
 .projects h2{
+  margin-top:80px;
   padding:50px 0;
   text-align:center;
   font-size: 2.5em;
@@ -298,6 +300,7 @@ body{
 }
 
 .experience h2{
+  margin-top:80px;
   color:#dfa437;
   text-transform:uppercase;
   font-size:2.5em;
