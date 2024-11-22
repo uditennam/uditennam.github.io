@@ -309,11 +309,14 @@
   }
 
   .floating-widget {
-    height: 25px; /* Adjust widget size */
-    font-size: 6px;
-    padding-left: 10px;
-    padding-right: 10px;
-  }  
+    position: static; /* Disable fixed position */
+    margin: 10px 0; /* Add spacing between widgets */
+    width: 90%; /* Ensure they fit the screen */
+  }
+
+  #hire-me-widget, #resume-widget {
+    margin: 5px auto; /* Center the buttons */
+  }
   
 }
 
