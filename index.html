@@ -250,6 +250,62 @@
     .floating-widget .btn-outline-success a {
       text-decoration: none;
     }
+
+    /* Ensure proper scaling for smaller screens */
+@media (max-width: 768px) {
+  #terminal-container {
+    width: 90%; /* Increase responsiveness */
+    height: auto; /* Allow height to adapt */
+    max-width: 100%; /* Ensure no overflow */
+  }
+
+  #landing p {
+    font-size: 16px; /* Reduce font size for better readability */
+    margin: 4px 0; /* Adjust spacing */
+  }
+
+  #terminal-header {
+    font-size: 12px; /* Shrink header text */
+    padding: 6px 12px; /* Adjust padding */
+  }
+
+  #output {
+    font-size: 12px; /* Smaller font size for terminal content */
+    padding: 8px; /* Adjust padding */
+  }
+
+  #input {
+    padding: 8px; /* Reduce padding */
+  }
+
+  .floating-widget {
+    height: 35px; /* Adjust widget size */
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    flex-direction: column; /* Stack elements vertically */
+    padding: 0 10px; /* Add padding for smaller screens */
+  }
+
+  #terminal-container {
+    width: 100%; /* Full width */
+    height: auto; /* Flexible height */
+  }
+
+  #output {
+    font-size: 10px; /* Smaller font for tiny screens */
+  }
+
+  #input {
+    font-size: 10px;
+  }
+}
+
+    
   </style>
 </head>
 
