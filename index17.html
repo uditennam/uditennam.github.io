@@ -1,0 +1,1075 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Udit Ennam | Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <!-- Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+  >
+
+  <style>
+    /* ====== Base styles ====== */
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #050507;
+      color: #F4F4F6;
+      margin: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page-shell {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding-inline: 1.5rem;
+    }
+
+    /* ====== Left vertical strip with label ====== */
+    .edge-strip {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 64px;
+      background: linear-gradient(to bottom, #020204, #101018);
+      border-right: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .edge-strip-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #6C6C74;
+      transform: rotate(-90deg);
+      white-space: nowrap;
+      text-align: center;
+      opacity: 0.75;
+    }
+
+    /* Hide strip on smaller viewports so it never clashes */
+    @media (max-width: 991.98px),
+           (max-height: 720px) {
+      .edge-strip {
+        display: none;
+      }
+    }
+
+    /* ====== Intro overlay / splash ====== */
+    #intro-overlay {
+      position: fixed;
+      inset: 0;
+      background: #050507;
+      color: #F4F4F6;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      opacity: 1;
+      transition: opacity 0.6s ease;
+    }
+
+    #intro-overlay.fade-out {
+      opacity: 0;
+    }
+
+    .intro-tag {
+      font-size: 0.8rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #9F9FA4;
+      margin-bottom: 0.75rem;
+    }
+
+    .intro-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .intro-sub {
+      font-size: 0.9rem;
+      max-width: 420px;
+      margin: 0 auto 1.75rem auto;
+      color: #C4C4C9;
+    }
+
+    .intro-loader {
+      width: 140px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      overflow: hidden;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .intro-loader-bar {
+      position: absolute;
+      inset: 0;
+      width: 45%;
+      background: linear-gradient(90deg, #ffffff, #a8a8ff);
+      animation: loader-move 1.3s ease-in-out infinite;
+    }
+
+    @keyframes loader-move {
+      0%   { transform: translateX(-100%); }
+      50%  { transform: translateX(40%); }
+      100% { transform: translateX(120%); }
+    }
+
+    .intro-skip {
+      border: 1px solid #F4F4F6;
+      border-radius: 999px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: transparent;
+      color: #F4F4F6;
+      cursor: pointer;
+      opacity: 0.75;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .intro-skip:hover {
+      opacity: 1;
+      transform: translateY(-1px);
+    }
+
+    /* ====== Scroll reveal ====== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ====== Hero section ====== */
+    .hero-section {
+      padding-block: 4.5rem 3.5rem;
+    }
+
+    .hero-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 1rem auto;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+      border: 2px solid rgba(255,255,255,0.12);
+    }
+
+    .hero-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 3rem;
+      letter-spacing: -0.5px;
+      color: #FFFFFF;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-subtitle {
+      font-weight: 300;
+      font-size: 1.05rem;
+      color: #D3D3D7;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-metrics {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #8D8D95;
+      margin-bottom: 0.35rem;
+    }
+
+    .hero-meta {
+      font-size: 0.8rem;
+      color: #9D9DA4;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-open-to {
+      font-size: 0.85rem;
+      color: #D3D3D7;
+      margin-top: 0.75rem;
+    }
+
+    .hero-right-card {
+      background: radial-gradient(circle at top left, #1b1b25, #09090e);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 1.3rem 1.5rem;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+    }
+
+    .hero-right-title {
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #9F9FA9;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-right-item {
+      font-size: 0.9rem;
+      color: #E7E7EB;
+      margin-bottom: 0.35rem;
+    }
+
+    .hero-right-item span {
+      color: #A4A4FF;
+      font-weight: 500;
+    }
+
+    /* ====== KPI Bar ====== */
+    .kpi-bar {
+      margin-top: 0.6rem;
+      margin-bottom: 0.4rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.85rem;
+      color: #D3D3DD;
+      padding: 0.85rem 1.2rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      position: relative;
+      animation: kpi-glow 1.6s ease-out 0.4s 1; /* border-only glow, one time */
+    }
+
+    .kpi-item {
+      flex: 1;
+      min-width: 140px;
+      padding-right: 1.2rem;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .kpi-item:last-child {
+      border-right: none;
+      padding-right: 0;
+    }
+
+    .kpi-number {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #FFFFFF;
+      display: block;
+      margin-bottom: 0.1rem;
+    }
+
+    .kpi-label {
+      font-size: 0.78rem;
+      color: #C0C0CB;
+      line-height: 1.4;
+    }
+
+    @keyframes kpi-glow {
+      0% {
+        box-shadow: 0 0 0 rgba(164,164,255,0);
+        border-color: rgba(255,255,255,0.55);
+      }
+      40% {
+        box-shadow: 0 0 24px rgba(164,164,255,0.45);
+        border-color: rgba(255,255,255,0.9);
+      }
+      100% {
+        box-shadow: 0 0 0 rgba(164,164,255,0);
+        border-color: rgba(255,255,255,0.18);
+      }
+    }
+
+    /* ====== Buttons ====== */
+    .btn-outline {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      padding: 0.55rem 1.4rem;
+      border-radius: 999px;
+      display: inline-block;
+      text-decoration: none;
+      font-size: 0.95rem;
+      background: transparent;
+      color: #F4F4F6;
+      border: 1px solid rgba(244,244,246,0.7);
+      transition: all 0.15s ease;
+    }
+
+    .btn-outline:hover {
+      background: #F4F4F6;
+      color: #050507;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.45);
+    }
+
+    .btn-outline:focus-visible {
+      outline: 2px solid #D0D0F0;
+      outline-offset: 3px;
+    }
+
+    /* ====== Section titles ====== */
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #7E7E88;
+      margin-bottom: 0.4rem;
+    }
+
+    .section-heading {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #F4F4F6;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ====== Flip cards (experience grid) ====== */
+    .experience-section {
+      padding-block: 2rem 0.5rem;
+    }
+
+    .flip-card {
+      background: transparent;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      margin: 0 auto;
+      perspective: 1600px;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    @media (min-width: 992px) {
+      .flip-card {
+        width: 85%;
+      }
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s ease;
+      transform-style: preserve-3d;
+    }
+
+    .flip-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.7);
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front,
+    .flip-card-back {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      padding: 0.9rem;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .flip-card-front {
+      background: radial-gradient(circle at top left, #343445, #151520);
+      color: rgba(255,255,255,0.92);
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    .flip-card-back {
+      background: #0D0D14;
+      color: rgba(255,255,255,0.94);
+      font-size: 0.85rem;
+      transform: rotateY(180deg);
+      text-align: left;
+    }
+
+    .flip-card-back h6 {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .flip-card-back p {
+      font-weight: 400;
+      font-size: 0.82rem;
+      opacity: 0.92;
+      margin-bottom: 0.25rem;
+    }
+
+    .flip-card-back .tech {
+      font-size: 0.75rem;
+      color: #9C9CA6;
+      margin-top: 0.25rem;
+    }
+
+    /* ====== Strengths / principles / stack ====== */
+    .strength-card {
+      background: #0B0B12;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 1rem 1.1rem;
+      height: 100%;
+    }
+
+    .strength-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .strength-body {
+      font-size: 0.85rem;
+      color: #C6C6CE;
+    }
+
+    .principles-strip {
+      background: linear-gradient(90deg, #101018, #171725);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 0.9rem 1.2rem;
+      margin-block: 2rem;
+      font-size: 0.85rem;
+      color: #D7D7E0;
+    }
+
+    .principles-pill {
+      display: inline-block;
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-right: 0.35rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .tech-chip {
+      display: inline-block;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      background: #0B0B13;
+      border: 1px solid rgba(255,255,255,0.06);
+      margin-right: 0.35rem;
+      margin-bottom: 0.35rem;
+      color: #D3D3DD;
+    }
+
+    /* ====== Mobile timeline ====== */
+    .timeline-list {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-left: 0.3rem;
+    }
+
+    .timeline-list::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0.55rem;
+      width: 2px;
+      background: #2A2A34;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 1rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -0.15rem;
+      top: 0.45rem;
+      width: 9px;
+      height: 9px;
+      background: #F4F4F6;
+      border-radius: 50%;
+    }
+
+    /* ====== Footer ====== */
+    .site-footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 1.3rem 0 2.2rem;
+      font-size: 0.8rem;
+      color: #8F8F98;
+      margin-top: 2rem;
+    }
+
+    .site-footer a {
+      color: #D0D0F0;
+      text-decoration: none;
+    }
+
+    .site-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-icon i {
+      font-size: 1.2rem;
+      transition: transform 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
+      opacity: 0.85;
+    }
+
+    .footer-icon:hover i {
+      transform: translateY(-2px);
+      opacity: 1;
+      text-shadow: 0 0 6px rgba(208,208,240,0.7);
+    }
+
+    .footer-icon:focus-visible i {
+      opacity: 1;
+      transform: translateY(-2px);
+      text-shadow: 0 0 6px rgba(208,208,240,0.7);
+    }
+
+    /* ====== Responsive tweaks ====== */
+    @media (max-width: 991.98px) {
+      .hero-section {
+        padding-block: 3.2rem 2.4rem;
+      }
+      .hero-title {
+        font-size: 2.4rem;
+      }
+      .hero-right-card {
+        margin-top: 1.5rem;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .page-shell {
+        padding-inline: 1.1rem;
+      }
+      .hero-title {
+        font-size: 2.1rem;
+      }
+      .hero-section {
+        padding-block: 2.8rem 2rem;
+      }
+      .site-footer {
+        text-align: center;
+      }
+      .kpi-bar {
+        flex-direction: column;
+        gap: 0.75rem;
+        border-radius: 16px;
+      }
+      .kpi-item {
+        border-right: none;
+        padding-right: 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+      .kpi-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Left vertical strip with label -->
+<div class="edge-strip">
+  <div class="edge-strip-label">
+    UDIT ENNAM · DATA ENGINEERING
+  </div>
+</div>
+
+<!-- Intro splash / loader -->
+<div id="intro-overlay">
+  <p class="intro-tag">DATA ENGINEER · 10+ YEARS</p>
+  <h1 class="intro-title">I turn messy data into decisions teams can trust.</h1>
+  <p class="intro-sub">
+    A quick look at the platforms I’ve built, the teams I’ve shipped with,
+    and why I’m usually the person they call when “the data is wrong”.
+  </p>
+
+  <div class="intro-loader">
+    <div class="intro-loader-bar"></div>
+  </div>
+
+  <button class="intro-skip" id="intro-skip">
+    Skip to portfolio
+  </button>
+</div>
+
+<!-- Main site content -->
+<div id="site-content" class="d-none">
+  <div class="page-shell">
+
+    <!-- ============= HERO SECTION ============= -->
+    <section class="hero-section">
+      <div class="row align-items-center g-4 reveal">
+        <div class="col-lg-7">
+          <!-- Optional: replace headshot.jpg with your actual image or remove -->
+          <img src="headshot.jpg" alt="Udit Ennam" class="hero-avatar">
+
+          <h1 class="hero-title">I’m Udit Ennam</h1>
+          <p class="hero-subtitle mb-0">
+            Senior data engineer who owns the data problems when the numbers actually matter.
+            I design and run data platforms that teams can trust under pressure.
+          </p>
+
+          <p class="hero-metrics">
+            10+ YEARS IN DATA · 8 COMPANIES · PLATFORMS &amp; PIPELINES
+          </p>
+
+          <!-- KPI BAR -->
+          <div class="kpi-bar">
+            <div class="kpi-item">
+              <span class="kpi-number">3.8M+</span>
+              <span class="kpi-label">data assets impacted across Amazon &amp; Vanguard systems</span>
+            </div>
+            <div class="kpi-item">
+              <span class="kpi-number">95%</span>
+              <span class="kpi-label">reduction in deployment effort at Amazon through automation</span>
+            </div>
+            <div class="kpi-item">
+              <span class="kpi-number">42%</span>
+              <span class="kpi-label">sales lift driven at HopinTown using KPI-informed product changes</span>
+            </div>
+          </div>
+
+          <p class="hero-meta">
+            Based in Charlotte, NC · Open to remote US roles · Authorized to work in the US (no sponsorship needed)
+          </p>
+
+          <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+            <a href="resume.pdf"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="btn-outline">
+              Resume
+            </a>
+            <a href="https://www.linkedin.com/in/uditennam/"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="btn-outline">
+              Contact me
+            </a>
+          </div>
+
+          <p class="hero-open-to mb-0">
+            Currently open to Senior / Lead Data Engineer roles building analytics platforms, data products,
+            and reliable pipelines at scale.
+          </p>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="hero-right-card">
+            <p class="hero-right-title mb-2">Snapshot</p>
+            <p class="hero-right-item">
+              <span>Scale:</span> Pipelines and systems used across telecom, trading, sports betting, and e-commerce.
+            </p>
+            <p class="hero-right-item">
+              <span>Strength:</span> Making data trustworthy enough that non-technical teams actually rely on it.
+            </p>
+            <p class="hero-right-item">
+              <span>Style:</span> Calm under “the data is wrong” fire drills, opinionated about simplicity and clarity.
+            </p>
+            <p class="hero-right-item mb-0">
+              <span>Bonus:</span> Comfortable end-to-end: modeling, orchestration, infra, and partner storytelling.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= EXPERIENCE GRID (DESKTOP/TABLET ONLY) ============= -->
+    <section class="experience-section d-none d-md-block">
+      <p class="section-label">Experience</p>
+      <h2 class="section-heading">Ten years across 8 teams, shipping real things.</h2>
+
+      <!-- Top row: 4 cards -->
+      <div class="row g-4 mb-3 reveal">
+        <div class="col-6 col-lg-3">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                21 CC Education
+              </div>
+              <div class="flip-card-back">
+                <h6>21 CC Education</h6>
+                <p>E-learning courses creator · 2015 – 2017</p>
+                <p>Produced interactive learning content for global clients and learned to design systems that scale knowledge, not just features.</p>
+                <p class="tech">Content design · E-learning</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                HopinTown
+              </div>
+              <div class="flip-card-back">
+                <h6>HopinTown</h6>
+                <p>Data Analyst · 2014 – 2017</p>
+                <p>Increased customer acquisition by 30% and boosted sales by 42% using KPI-driven dashboards and experiments.</p>
+                <p class="tech">Python · MySQL · Tableau · Analytics</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                Rutgers University
+              </div>
+              <div class="flip-card-back">
+                <h6>Rutgers University</h6>
+                <p>TA &amp; Research Intern · 2017 – 2019</p>
+                <p>Integrated 100GB+ datasets and reduced sensor model error by 2.14% on a research project with Cornell &amp; NIH.</p>
+                <p class="tech">Python · SciPy · Data Science</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                Amazon.com
+              </div>
+              <div class="flip-card-back">
+                <h6>Amazon.com</h6>
+                <p>Software Development Engineer · 2019 – 2021</p>
+                <p>Automated internal tooling to cut deployment effort by 95% and reduce release time by ~75%, impacting 2.3M+ product titles.</p>
+                <p class="tech">Java · AngularJS · DynamoDB · RDS</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom row: 4 cards -->
+      <div class="row g-4 mb-1 reveal">
+        <div class="col-6 col-lg-3">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                DraftKings
+              </div>
+              <div class="flip-card-back">
+                <h6>DraftKings</h6>
+                <p>Data Engineer · 2021 – 2022</p>
+                <p>Built internal data validation tooling to ensure consistency between upstream and downstream sources for real-time gaming analytics.</p>
+                <p class="tech">Python · Airflow · Snowflake · Terraform</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                T-Mobile
+              </div>
+              <div class="flip-card-back">
+                <h6>T-Mobile</h6>
+                <p>Senior Data Engineer · 2022 – 2023</p>
+                <p>Migrated SQL Server workloads to AWS RDS (multi-AZ) and upgraded Airflow to 2.0, improving reliability, security, and scalability of analytics pipelines.</p>
+                <p class="tech">AWS · Airflow · Docker · SQL Server</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                LSEG
+              </div>
+              <div class="flip-card-back">
+                <h6>London Stock Exchange Group</h6>
+                <p>Lead Python Developer · 2023 – 2023</p>
+                <p>Built automated exclusion systems and APIs to keep index funds aligned with revenue and compliance rules.</p>
+                <p class="tech">Python · Flask · AWS Lambda · PostgreSQL</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                Vanguard
+              </div>
+              <div class="flip-card-back">
+                <h6>Vanguard</h6>
+                <p>Senior Software Developer · 2024 – 2025</p>
+                <p>Designed a distributed PII classification system tagging 1.5M+ S3 objects and automated scan reporting across hundreds of data sources.</p>
+                <p class="tech">Python · AWS (S3, ECS, SQS, EventBridge) · BigID</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= STRENGTHS & PRINCIPLES ============= -->
+    <section class="mt-4">
+      <p class="section-label">How I’m useful</p>
+      <h2 class="section-heading">What teams usually lean on me for.</h2>
+
+      <div class="row g-3 mb-3 reveal">
+        <div class="col-md-4">
+          <div class="strength-card">
+            <p class="strength-title">Making data trustworthy</p>
+            <p class="strength-body">
+              I care about lineage, tests, and observability so when someone says “the data is wrong”,
+              we can prove whether it is—or isn’t—quickly and calmly.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="strength-card">
+            <p class="strength-title">Owning pipelines end-to-end</p>
+            <p class="strength-body">
+              From modeling to orchestration to infra, I’m comfortable taking a data flow from idea
+              to something running in production that you can page me about.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="strength-card">
+            <p class="strength-title">Translating tech for humans</p>
+            <p class="strength-body">
+              I like working with PMs, analysts, and leadership and explaining trade-offs in plain language
+              so we can make good decisions under pressure.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="principles-strip reveal">
+        <div class="mb-2">
+          <span class="principles-pill">No “mystery” dashboards</span>
+          <span class="principles-pill">Simple over clever</span>
+          <span class="principles-pill">You build it, you own it</span>
+          <span class="principles-pill">Good docs &gt; heroics</span>
+        </div>
+        <div>
+          I care less about the shiniest tool and more about whether the data product is fast,
+          boringly reliable, and easy for the next person to understand.
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= TECH STACK ============= -->
+    <section class="mb-5 reveal">
+      <p class="section-label">Toolbox</p>
+      <h2 class="section-heading">Stacks I’m comfortable owning.</h2>
+
+      <div class="mb-2">
+        <span class="tech-chip">Python</span>
+        <span class="tech-chip">SQL</span>
+        <span class="tech-chip">PostgreSQL</span>
+        <span class="tech-chip">Snowflake</span>
+        <span class="tech-chip">Kafka / Kinesis</span>
+        <span class="tech-chip">Spark</span>
+        <span class="tech-chip">dbt</span>
+        <span class="tech-chip">Airflow</span>
+        <span class="tech-chip">AWS (S3, EMR, Lambda, RDS)</span>
+        <span class="tech-chip">GCP / BigQuery</span>
+        <span class="tech-chip">Terraform</span>
+        <span class="tech-chip">Docker</span>
+        <span class="tech-chip">Git / CI/CD</span>
+      </div>
+      <div class="small text-muted" style="color:#9C9CA6 !important;">
+        And I’m more than happy to ramp on your specific stack if the problems are interesting.
+      </div>
+    </section>
+
+    <!-- ============= MOBILE-ONLY TIMELINE ============= -->
+    <section class="d-block d-md-none mb-5">
+      <p class="section-label">Experience</p>
+
+      <div class="timeline-list small reveal">
+        <div class="timeline-item">
+          <strong>Vanguard</strong><br>
+          Senior Software Developer · 2024 – 2025<br>
+          Designed a distributed PII classification system across S3 and automated scan reporting.
+        </div>
+        <div class="timeline-item">
+          <strong>London Stock Exchange Group</strong><br>
+          Lead Python Developer · 2023 – 2023<br>
+          Built automated exclusion APIs to keep index funds aligned with compliance rules.
+        </div>
+        <div class="timeline-item">
+          <strong>T-Mobile</strong><br>
+          Senior Data Engineer · 2022 – 2023<br>
+          Modernized analytics pipelines via AWS RDS migration and Airflow 2.0 upgrade.
+        </div>
+        <div class="timeline-item">
+          <strong>DraftKings</strong><br>
+          Data Engineer · 2021 – 2022<br>
+          Created validation tooling and pipelines for real-time gaming analytics.
+        </div>
+        <div class="timeline-item">
+          <strong>Amazon.com</strong><br>
+          Software Development Engineer · 2019 – 2021<br>
+          Automated internal tools reducing deployment effort by 95% and impacting 2.3M+ titles.
+        </div>
+        <div class="timeline-item">
+          <strong>Rutgers University</strong><br>
+          TA &amp; Research Intern · 2017 – 2019<br>
+          Taught data science courses and reduced model error by 2.14% on a research project.
+        </div>
+        <div class="timeline-item">
+          <strong>HopinTown</strong><br>
+          Data Analyst · 2014 – 2017<br>
+          Drove 30% higher customer acquisition and 42% sales lift using KPI-driven insights.
+        </div>
+        <div class="timeline-item mb-0">
+          <strong>21 CC Education</strong><br>
+          E-learning Courses Creator · 2015 – 2017<br>
+          Built interactive training content at scale.
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= FOOTER ============= -->
+    <footer class="site-footer">
+      <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-between align-items-center gap-2">
+        <div>
+          © 2025 Udit Ennam. All rights reserved.
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <!-- Email -->
+          <a href="mailto:udite510@gmail.com" class="footer-icon" aria-label="Email Udit">
+            <i class="bi bi-envelope-at"></i>
+          </a>
+
+          <!-- GitHub -->
+          <a href="https://github.com/YOUR_GITHUB_USERNAME"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="footer-icon"
+             aria-label="Udit on GitHub">
+            <i class="bi bi-github"></i>
+          </a>
+
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/in/uditennam/"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="footer-icon"
+             aria-label="Udit on LinkedIn">
+            <i class="bi bi-linkedin"></i>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</div>
+
+<!-- Bootstrap JS bundle (optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const overlay = document.getElementById('intro-overlay');
+    const content = document.getElementById('site-content');
+    const skipBtn = document.getElementById('intro-skip');
+
+    function revealSite() {
+      overlay.classList.add('fade-out');
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        content.classList.remove('d-none');
+      }, 600);
+    }
+
+    const introTimeout = setTimeout(revealSite, 5000);
+
+    skipBtn.addEventListener('click', function () {
+      clearTimeout(introTimeout);
+      revealSite();
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>
+
+</body>
+</html>
+
