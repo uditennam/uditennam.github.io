@@ -1,0 +1,1287 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Truce.ai — De-escalate conversations in real time</title>
+  <meta name="description" content="Truce.ai detects escalation risk using non-verbal audio signals and offers calm prompts or a gentle Truce Cue (music) to help you pause and reset. Privacy-first. Join the waitlist." />
+
+  <!-- Open Graph (optional) -->
+  <meta property="og:title" content="Truce.ai — De-escalate conversations in real time" />
+  <meta property="og:description" content="Real-time tension signals + calm prompts + optional Truce Cue (music). Privacy-first. Join the waitlist." />
+  <meta property="og:type" content="website" />
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#070a12;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.035);
+      --line:rgba(255,255,255,.12);
+      --text:#f4f7ff;
+      --muted:rgba(244,247,255,.72);
+      --muted2:rgba(244,247,255,.55);
+      --brand1:#7c5cff;
+      --brand2:#24d3ff;
+      --shadow:0 18px 60px rgba(0,0,0,.45);
+      --radius:18px;
+
+      /* Premium spacing */
+      --sectionY: 96px;
+      --copyLeading: 1.65;
+
+      /* Sticky nav height (used for hero centering) */
+      --navH: 86px;
+    }
+
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(1200px 600px at 15% 0%, rgba(124,92,255,.22), transparent 60%),
+        radial-gradient(900px 500px at 85% 15%, rgba(36,211,255,.16), transparent 55%),
+        radial-gradient(900px 600px at 50% 100%, rgba(124,92,255,.14), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    p, .lead { line-height: var(--copyLeading); }
+    .lead { max-width: 62ch; }
+    .muted { max-width: 72ch; }
+
+    /* Premium non-blocking top progress bar */
+    .top-loader{
+      position:fixed; inset:0 0 auto 0;
+      height:3px; z-index:9999;
+      background:transparent;
+      pointer-events:none;
+    }
+    .top-loader > span{
+      display:block; height:100%;
+      width:0%;
+      background:linear-gradient(90deg,var(--brand1),var(--brand2));
+      box-shadow:0 6px 20px rgba(124,92,255,.35);
+      transition:width .18s ease;
+    }
+
+    .glass{
+      background:linear-gradient(180deg,var(--panel),var(--panel2));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .nav-blur{
+      backdrop-filter:blur(12px);
+      background:rgba(7,10,18,.55) !important;
+      border-bottom:1px solid var(--line);
+    }
+
+    .brand-badge{
+      display:inline-flex; align-items:center; gap:.6rem;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      padding:.5rem .85rem;
+      border-radius:999px;
+      color:var(--muted);
+      font-size:.92rem;
+    }
+    .dot{
+      width:9px; height:9px; border-radius:999px;
+      background:linear-gradient(135deg,var(--brand1),var(--brand2));
+      box-shadow:0 0 0 6px rgba(124,92,255,.12);
+      display:inline-block;
+    }
+    .grad-text{
+      background:linear-gradient(135deg,var(--brand1),var(--brand2));
+      -webkit-background-clip:text; background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .btn-brand{
+      border:none;
+      background:linear-gradient(135deg,var(--brand1),var(--brand2));
+      color:#071022;
+      font-weight:800;
+      box-shadow:0 16px 40px rgba(124,92,255,.25);
+    }
+    .btn-brand:hover{transform:translateY(-1px); filter:brightness(1.02);}
+    .btn-soft{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+    }
+    .btn-soft:hover{border-color:rgba(255,255,255,.22); transform:translateY(-1px);}
+
+    .muted{color:var(--muted)!important;}
+    .muted2{color:var(--muted2)!important;}
+
+    .icon-pill{
+      width:44px; height:44px; border-radius:16px;
+      display:grid; place-items:center;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+    }
+
+    .form-control,.form-select{
+      background:rgba(7,10,18,.45);
+      border:1px solid var(--line);
+      color:var(--text);
+      border-radius:14px;
+      padding:.75rem .85rem;
+    }
+    .form-control::placeholder{color:rgba(244,247,255,.45);}
+    .form-control:focus,.form-select:focus{
+      background:rgba(7,10,18,.55);
+      border-color:rgba(124,92,255,.55);
+      box-shadow:0 0 0 .25rem rgba(124,92,255,.14);
+      color:var(--text);
+    }
+    .form-check-input{
+      background-color:rgba(7,10,18,.55);
+      border:1px solid var(--line);
+    }
+    .form-check-input:checked{
+      background-color:var(--brand1);
+      border-color:var(--brand1);
+    }
+
+    .section-pad{ padding: var(--sectionY) 0; }
+    .divider{border-top:1px solid var(--line); margin:0;}
+    footer{border-top:1px solid var(--line); padding:30px 0; color:var(--muted2);}
+
+    /* Wider gutters for airy layout */
+    .row.g-3{ --bs-gutter-x: 1.35rem; --bs-gutter-y: 1.35rem; }
+    .row.g-4{ --bs-gutter-x: 1.85rem; --bs-gutter-y: 1.85rem; }
+
+    /* Smooth reveal animations */
+    .reveal{
+      opacity:0;
+      transform:translateY(10px);
+      transition:opacity .75s ease, transform .75s ease;
+      will-change:opacity,transform;
+    }
+    .reveal.show{opacity:1; transform:translateY(0);}
+    .reveal.delay-1{transition-delay:.10s}
+    .reveal.delay-2{transition-delay:.20s}
+    .reveal.delay-3{transition-delay:.30s}
+
+    /* HERO: vertically centered on desktop, balanced on all screens */
+    .hero-pad{
+      padding: 88px 0 64px;
+    }
+    @media (min-width: 992px){
+      .hero-pad{
+        min-height: calc(100vh - var(--navH));
+        display:flex;
+        align-items:center;
+        padding: 56px 0 56px;
+      }
+    }
+
+    /* Animated demo card */
+    .signal{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:rgba(7,10,18,.38);
+      border-radius:16px;
+      padding:16px;
+    }
+    .signal:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(420px 220px at 15% 15%, rgba(124,92,255,.22), transparent 55%),
+        radial-gradient(420px 220px at 85% 10%, rgba(36,211,255,.14), transparent 55%);
+      opacity:.7;
+      pointer-events:none;
+    }
+    .meter{
+      height:10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+    }
+    .meter > span{
+      display:block; height:100%;
+      width:42%;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--brand2),var(--brand1));
+      animation:swell 3.2s ease-in-out infinite;
+    }
+    @keyframes swell{
+      0%{width:28%; filter:brightness(1.0)}
+      50%{width:78%; filter:brightness(1.08)}
+      100%{width:28%; filter:brightness(1.0)}
+    }
+    .pulse-dot{
+      width:10px; height:10px; border-radius:999px;
+      background:linear-gradient(135deg,var(--brand1),var(--brand2));
+      box-shadow:0 0 0 0 rgba(124,92,255,.45);
+      animation:pulse 1.6s ease-out infinite;
+    }
+    @keyframes pulse{
+      0%{box-shadow:0 0 0 0 rgba(124,92,255,.40)}
+      100%{box-shadow:0 0 0 14px rgba(124,92,255,0)}
+    }
+
+    /* Hero media */
+    .hero-media{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+    }
+    .hero-media::after{
+      content:"";
+      position:absolute; inset:0;
+      background:linear-gradient(180deg, rgba(7,10,18,.00), rgba(7,10,18,.22), rgba(7,10,18,.55));
+      pointer-events:none;
+    }
+    .hero-media video,
+    .hero-media img{
+      display:block;
+      width:100%;
+      height:320px;
+      object-fit:cover;
+    }
+    @media (min-width: 992px){
+      .hero-media video,
+      .hero-media img{
+        height: 200px; /* smaller so demo fits without scrolling */
+      }
+    }
+
+    /* Small proof chips */
+    .chip{
+      display:inline-flex; align-items:center; gap:.45rem;
+      padding:.42rem .7rem;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      font-size:.88rem;
+      white-space:nowrap;
+    }
+    @media (max-width: 575.98px){
+      .chip{ font-size:.82rem; padding:.36rem .62rem; }
+      .display-5{ font-size: 2.05rem; }
+      .brand-badge{ font-size: .85rem; }
+    }
+
+    /* Truce Cue mini player */
+    .player{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.03);
+      border-radius:16px;
+      padding:14px;
+    }
+    .mode-pill{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.035);
+      border-radius:999px;
+      padding:.28rem .6rem;
+      font-size:.82rem;
+      color:var(--muted);
+      display:inline-flex;
+      gap:.4rem;
+      align-items:center;
+    }
+
+    /* Right hero card should fit viewport */
+    @media (min-width: 992px){
+      .hero-card{
+        padding: 22px !important;
+        max-height: calc(100vh - 140px);
+        overflow: hidden; /* no internal scrollbar - we fit by design */
+      }
+      .hero-card .hero-media{ margin-top: 14px !important; }
+      .hero-card .signal{ margin-top: 14px !important; padding: 14px !important; }
+      .hero-card hr{ margin: 14px 0 !important; }
+      .hero-card .chip{ margin-top: 0.35rem; }
+    }
+
+    /* Mobile sticky CTA bar */
+    .mobile-cta{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      z-index:9998;
+      padding:12px 12px;
+      background:rgba(7,10,18,.72);
+      border-top:1px solid var(--line);
+      backdrop-filter:blur(12px);
+      display:none;
+    }
+    @media (max-width: 991.98px){
+      .mobile-cta{display:block;}
+      body{padding-bottom:78px;}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top-loader" aria-hidden="true"><span id="topBar"></span></div>
+
+  <!-- NAV -->
+  <nav class="navbar navbar-expand-lg nav-blur sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2 text-white fw-bold" href="#top">
+        <span class="d-inline-grid place-items-center rounded-4"
+              style="width:38px;height:38px;background:linear-gradient(135deg,var(--brand1),var(--brand2));box-shadow:0 12px 30px rgba(124,92,255,.22);">
+          <i class="bi bi-shield-check text-white"></i>
+        </span>
+        Truce.ai
+      </a>
+
+      <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon" style="filter: invert(1) grayscale(1);"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-2">
+          <li class="nav-item"><a class="nav-link text-white-50" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="#trucecue">Truce Cue</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="#how">How it works</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="#usecases">Use cases</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="#privacy">Privacy</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50" href="#waitlist">Waitlist</a></li>
+        </ul>
+        <div class="d-flex ms-lg-3 gap-2">
+          <a class="btn btn-soft rounded-4 px-3 d-none d-lg-inline-flex" href="#share">
+            Share <i class="bi bi-share ms-1"></i>
+          </a>
+          <a class="btn btn-brand rounded-4 px-3" href="#waitlist">
+            Join waitlist <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="top" class="hero-pad">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <div class="reveal show">
+            <span class="brand-badge"><span class="dot"></span> Real-time de-escalation for conversations that matter</span>
+
+            <h1 class="display-5 fw-extrabold mt-3" style="letter-spacing:-1.15px;">
+              Catch escalation early — <span class="grad-text">then reset together.</span>
+            </h1>
+
+            <p class="lead muted mt-3">
+              Truce.ai detects rising tension using non-verbal audio signals (tone, pacing, overlap) and offers
+              calm next-move prompts — or an optional <span class="fw-semibold">Truce Cue</span>: a gentle, shared music “pause ritual.”
+            </p>
+
+            <div class="d-flex flex-wrap gap-2 mt-4">
+              <a href="#waitlist" class="btn btn-brand rounded-4 px-4 py-2">
+                Get early access <i class="bi bi-lightning-charge-fill ms-1"></i>
+              </a>
+              <a href="#trucecue" class="btn btn-soft rounded-4 px-4 py-2">
+                See Truce Cue <i class="bi bi-music-note-beamed ms-1"></i>
+              </a>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 mt-4">
+              <span class="chip"><i class="bi bi-shield-lock"></i> Privacy-first signals</span>
+              <span class="chip"><i class="bi bi-activity"></i> Escalation risk meter</span>
+              <span class="chip"><i class="bi bi-chat-square-quote"></i> Calm prompts</span>
+              <span class="chip"><i class="bi bi-music-note-beamed"></i> Optional Truce Cue</span>
+            </div>
+
+            <p class="muted2 mt-4 mb-0" style="font-size:.95rem;">
+              Early beta. No spam — only invites + important updates.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="glass p-4 reveal delay-1 hero-card">
+            <div class="d-flex align-items-start gap-3">
+              <div class="icon-pill"><i class="bi bi-activity text-white"></i></div>
+              <div>
+                <h5 class="mb-1 fw-bold">Live Tension + Truce Cue</h5>
+                <p class="muted mb-0" style="font-size:.95rem;">
+                  A gentle “heat check” — plus a hands-free reset option when you can’t look at your phone.
+                </p>
+              </div>
+            </div>
+
+            <!-- OPTIONAL hero media: stock video OR image -->
+            <div class="hero-media mt-4">
+              <video id="heroVideo" class="w-100" controls preload="none" playsinline muted>
+                <source id="heroVideoSrc" src="" type="video/mp4">
+              </video>
+              <img id="heroImage" src="" alt="Calm conversation moment" loading="lazy" decoding="async" style="display:none;">
+            </div>
+
+            <!-- Demo signal + cue -->
+            <div class="signal mt-4">
+              <div class="d-flex align-items-center justify-content-between position-relative">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="pulse-dot"></span>
+                  <div class="fw-semibold">Escalation risk</div>
+                </div>
+                <span class="badge rounded-pill text-bg-light bg-opacity-10 text-white border border-white border-opacity-10">
+                  Demo
+                </span>
+              </div>
+
+              <div class="meter mt-3 position-relative">
+                <span></span>
+              </div>
+
+              <div class="position-relative mt-4">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-chat-square-quote text-white"></i>
+                  <div class="fw-semibold">Suggested next move</div>
+                </div>
+                <div class="mt-2 p-3 rounded-4"
+                     style="border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.03);">
+                  <span class="muted2">Try:</span>
+                  <span class="fw-semibold"> “Pause — I’ll summarize what I heard. Tell me if I got it right.”</span>
+                </div>
+              </div>
+
+              <!-- Truce Cue mini player (concept demo) -->
+              <div class="position-relative mt-4">
+                <div class="d-flex align-items-center justify-content-between gap-2">
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-music-note-beamed text-white"></i>
+                    <div class="fw-semibold">Truce Cue</div>
+                  </div>
+                  <span class="mode-pill"><i class="bi bi-bell"></i> Nudge-ready</span>
+                </div>
+
+                <div class="player mt-2">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                      <div class="muted2" style="font-size:.85rem;">Optional intervention</div>
+                      <div class="fw-semibold">Play our “reset” song?</div>
+                    </div>
+                    <button class="btn btn-brand rounded-4 px-3 py-2" type="button" id="cuePreviewBtn">
+                      Preview <i class="bi bi-play-fill ms-1"></i>
+                    </button>
+                  </div>
+
+                  <div class="d-flex flex-wrap gap-2 mt-3">
+                    <span class="mode-pill"><i class="bi bi-toggle2-on"></i> Auto (soft fade)</span>
+                    <span class="mode-pill"><i class="bi bi-bell"></i> Nudge-only</span>
+                    <span class="mode-pill"><i class="bi bi-hand-index-thumb"></i> Manual</span>
+                  </div>
+
+                  <div class="muted2 mt-3" style="font-size:.88rem;">
+                    Designed to be gentle — never forced. Stop anytime.
+                  </div>
+
+                  <audio id="cueAudio" preload="none" style="display:none;"></audio>
+                </div>
+              </div>
+            </div>
+
+            <hr class="divider my-4">
+
+            <div class="d-flex flex-wrap gap-2">
+              <span class="chip"><i class="bi bi-check2-circle"></i> Non-verbal signals</span>
+              <span class="chip"><i class="bi bi-slash-circle"></i> Not “listening to words”</span>
+              <span class="chip"><i class="bi bi-toggle-on"></i> Consent-driven</span>
+            </div>
+
+            <div class="mt-4">
+              <a class="btn btn-brand rounded-4 w-100 py-2" href="#waitlist">
+                Join the waitlist <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Share strip -->
+      <div id="share" class="mt-5 reveal delay-2">
+        <div class="glass p-3 p-md-4 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-megaphone"></i>
+            <div>
+              <div class="fw-semibold">Make it spread</div>
+              <div class="muted2" style="font-size:.95rem;">Send to the person you love — when you both want to argue better, not harder.</div>
+            </div>
+          </div>
+          <div class="d-flex flex-wrap gap-2">
+            <button class="btn btn-soft rounded-4 px-3" id="copyLinkBtn" type="button">
+              Copy link <i class="bi bi-link-45deg ms-1"></i>
+            </button>
+            <a class="btn btn-soft rounded-4 px-3" id="tweetBtn" href="#" target="_blank" rel="noopener">
+              Tweet <i class="bi bi-twitter-x ms-1"></i>
+            </a>
+            <a class="btn btn-brand rounded-4 px-3" href="#waitlist">
+              Get early access <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- FEATURES -->
+  <section id="features" class="section-pad pt-0">
+    <div class="container">
+      <div class="mb-4 reveal">
+        <h2 class="h3 fw-bold mb-2">Built for real conversations</h2>
+        <p class="muted mb-0">Truce is designed to feel supportive — not intrusive.</p>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-md-6 col-lg-4">
+          <div class="glass p-4 h-100 reveal delay-1">
+            <div class="icon-pill mb-3"><i class="bi bi-activity"></i></div>
+            <h5 class="fw-bold">Escalation risk meter</h5>
+            <p class="muted mb-0">Turn raw audio patterns into a simple signal: intensity, volatility, overlap, pacing.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="glass p-4 h-100 reveal delay-2">
+            <div class="icon-pill mb-3"><i class="bi bi-chat-square-quote"></i></div>
+            <h5 class="fw-bold">Calm next moves</h5>
+            <p class="muted mb-0">Short prompts you can actually use: summarize, clarify intent, ask one question, reset tone.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="glass p-4 h-100 reveal delay-3">
+            <div class="icon-pill mb-3"><i class="bi bi-shield-lock"></i></div>
+            <h5 class="fw-bold">Privacy-first by design</h5>
+            <p class="muted mb-0">Non-verbal signals first. Minimal retention. Clear controls. Consent always.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUCE CUE -->
+  <section id="trucecue" class="section-pad pt-0">
+    <div class="container">
+      <div class="row g-4 align-items-start">
+        <div class="col-lg-6">
+          <div class="reveal">
+            <h2 class="h3 fw-bold mb-2">Truce Cue: a shared “pause ritual”</h2>
+            <p class="muted mb-0">
+              In the heat of the moment, no one wants to stare at a phone. Truce Cue offers a gentle intervention —
+              a soft chime + optional music fade-in — so both people can reset without anyone “winning” or “losing.”
+            </p>
+
+            <div class="d-flex flex-wrap gap-2 mt-4">
+              <span class="chip"><i class="bi bi-bell"></i> Gentle nudge</span>
+              <span class="chip"><i class="bi bi-music-note-beamed"></i> Optional music</span>
+              <span class="chip"><i class="bi bi-hand-index-thumb"></i> One-tap stop</span>
+              <span class="chip"><i class="bi bi-people"></i> Shared choice</span>
+            </div>
+
+            <div class="mt-4 muted2" style="font-size:.98rem;">
+              <div class="fw-semibold text-white">How it triggers (concept):</div>
+              <ul class="mt-2 mb-0">
+                <li>Only after escalation stays high briefly (not twitchy)</li>
+                <li>Option to “nudge-only” instead of music</li>
+                <li>Always controllable — stop instantly</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="glass p-4 reveal delay-1">
+            <div class="d-flex align-items-start gap-3">
+              <div class="icon-pill"><i class="bi bi-music-note-beamed"></i></div>
+              <div>
+                <h5 class="fw-bold mb-1">Top 5 “Truce Songs”</h5>
+                <p class="muted mb-0" style="font-size:.98rem;">
+                  You pick what feels safe. A calm track, rain sounds, lo-fi — whatever helps you both soften.
+                </p>
+              </div>
+            </div>
+
+            <div class="player mt-4">
+              <div class="d-flex align-items-center justify-content-between gap-2">
+                <div>
+                  <div class="muted2" style="font-size:.85rem;">Example playlist</div>
+                  <div class="fw-semibold">Your Truce Top 5</div>
+                </div>
+                <span class="mode-pill"><i class="bi bi-shield-lock"></i> Personal</span>
+              </div>
+
+              <div class="mt-3">
+                <div class="d-flex align-items-center justify-content-between py-2 px-2 rounded-4"
+                     style="border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.02);">
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-music-note"></i>
+                    <div>
+                      <div class="fw-semibold">“Reset Track #1”</div>
+                      <div class="muted2" style="font-size:.85rem;">gentle • familiar • safe</div>
+                    </div>
+                  </div>
+                  <span class="muted2" style="font-size:.85rem;">3:12</span>
+                </div>
+
+                <div class="d-flex align-items-center justify-content-between py-2 px-2 mt-2 rounded-4"
+                     style="border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.02);">
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-cloud-rain"></i>
+                    <div>
+                      <div class="fw-semibold">Rain + soft piano</div>
+                      <div class="muted2" style="font-size:.85rem;">non-lyrical option</div>
+                    </div>
+                  </div>
+                  <span class="muted2" style="font-size:.85rem;">—</span>
+                </div>
+              </div>
+
+              <div class="mt-3 muted2" style="font-size:.92rem;">
+                The point isn’t “music solves conflict.” It’s a quick pattern interrupt so you can come back with clarity.
+              </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 mt-4">
+              <span class="mode-pill"><i class="bi bi-toggle2-on"></i> Auto (soft fade)</span>
+              <span class="mode-pill"><i class="bi bi-bell"></i> Nudge-only</span>
+              <span class="mode-pill"><i class="bi bi-hand-index-thumb"></i> Manual</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section id="how" class="section-pad pt-0">
+    <div class="container">
+      <div class="mb-4 reveal">
+        <h2 class="h3 fw-bold mb-2">How it works</h2>
+        <p class="muted mb-0">Non-verbal patterns → a simple signal → gentle interventions.</p>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-lg-4">
+          <div class="glass p-4 h-100 reveal delay-1">
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <span class="badge rounded-pill text-bg-light bg-opacity-10 text-white border border-white border-opacity-10">1</span>
+              <h6 class="mb-0 fw-bold">Listen (with consent)</h6>
+            </div>
+            <p class="muted mb-0">Audio is processed as signal patterns (tone/pacing/overlap). The goal is escalation risk — not content analysis.</p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="glass p-4 h-100 reveal delay-2">
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <span class="badge rounded-pill text-bg-light bg-opacity-10 text-white border border-white border-opacity-10">2</span>
+              <h6 class="mb-0 fw-bold">Detect escalation risk</h6>
+            </div>
+            <p class="muted mb-0">When intensity stays high long enough (to avoid false positives), Truce surfaces a calm “heat check.”</p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="glass p-4 h-100 reveal delay-3">
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <span class="badge rounded-pill text-bg-light bg-opacity-10 text-white border border-white border-opacity-10">3</span>
+              <h6 class="mb-0 fw-bold">Offer a reset</h6>
+            </div>
+            <p class="muted mb-0">Choose prompts, a gentle nudge, or Truce Cue (music). Always optional. Always stoppable.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section id="usecases" class="section-pad pt-0">
+    <div class="container">
+      <div class="mb-4 reveal">
+        <h2 class="h3 fw-bold mb-2">Use cases</h2>
+        <p class="muted mb-0">Truce was born for couples — and expands naturally to teams and customer-facing roles.</p>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-lg-4">
+          <div class="glass p-4 h-100 reveal delay-1">
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <div class="icon-pill"><i class="bi bi-heart"></i></div>
+              <div class="fw-bold">Couples</div>
+            </div>
+            <p class="muted mb-3">Avoid spirals. Repair faster. Use Truce Cue as a shared ritual to reset without blame.</p>
+            <img id="imgCouples" src="" alt="Couple having a calm serious conversation" class="img-fluid rounded-4"
+                 loading="lazy" decoding="async" style="border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.02); display:none;">
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="glass p-4 h-100 reveal delay-2">
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <div class="icon-pill"><i class="bi bi-people"></i></div>
+              <div class="fw-bold">Teams</div>
+            </div>
+            <p class="muted mb-3">Reduce misreads and escalation in meetings. Keep discussions productive under stress.</p>
+            <img id="imgTeams" src="" alt="Team meeting with a serious discussion" class="img-fluid rounded-4"
+                 loading="lazy" decoding="async" style="border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.02); display:none;">
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="glass p-4 h-100 reveal delay-3">
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <div class="icon-pill"><i class="bi bi-headset"></i></div>
+              <div class="fw-bold">Support & Sales</div>
+            </div>
+            <p class="muted mb-3">Stay calm under pressure and defuse tense calls before they escalate.</p>
+            <img id="imgSupport" src="" alt="Customer support agent staying calm" class="img-fluid rounded-4"
+                 loading="lazy" decoding="async" style="border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.02); display:none;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIVACY -->
+  <section id="privacy" class="section-pad pt-0">
+    <div class="container">
+      <div class="mb-4 reveal">
+        <h2 class="h3 fw-bold mb-2">Privacy and trust</h2>
+        <p class="muted mb-0">The trust model matters. Truce should feel safe to use.</p>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-lg-6">
+          <div class="glass p-4 h-100 reveal delay-1">
+            <h5 class="fw-bold">Principles</h5>
+            <ul class="muted mb-0">
+              <li>Consent-first UX (clear opt-in)</li>
+              <li>Non-verbal signals first (tone/pacing/overlap)</li>
+              <li>Minimal retention by default</li>
+              <li>Transparent limitations: “escalation risk,” not mind reading</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="glass p-4 h-100 reveal delay-2">
+            <h5 class="fw-bold">Controls</h5>
+            <ul class="muted mb-0">
+              <li>Choose modes: Auto (soft fade), Nudge-only, Manual</li>
+              <li>Instant stop for Truce Cue</li>
+              <li>Clear toggles for what’s processed and when</li>
+              <li>Privacy language designed to be human, not legalese</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WAITLIST + confirmation + survey -->
+  <section id="waitlist" class="section-pad pt-0">
+    <div class="container">
+      <div class="row g-4 align-items-stretch">
+        <div class="col-lg-6">
+          <div class="glass p-4 h-100 reveal">
+            <h2 class="h3 fw-bold mb-2">Join the waitlist</h2>
+            <p class="muted mb-4">Get early access, shape the MVP, and help us build this responsibly.</p>
+
+            <div id="alertBox" class="alert d-none mb-3" role="alert"></div>
+
+            <div id="confirmPanel" class="glass p-3 d-none mb-3" style="box-shadow:none;">
+              <div class="d-flex align-items-start gap-2">
+                <i class="bi bi-check2-circle text-success fs-5"></i>
+                <div>
+                  <div class="fw-bold">You’re in. Welcome to the Truce waitlist.</div>
+                  <div class="muted2 small mt-1">
+                    Check your inbox for a confirmation email (and peek in Spam/Promotions just in case).
+                    We’ll only email you for beta access + important updates.
+                  </div>
+                  <div class="muted2 small mt-2">
+                    Quick question to help us build the right MVP 👇
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <form id="waitlistForm" class="needs-validation" novalidate>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label small muted2" for="name">Name</label>
+                  <input class="form-control" id="name" name="name" type="text" placeholder="Your name" autocomplete="name">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small muted2" for="email">Email <span class="text-warning">*</span></label>
+                  <input class="form-control" id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+                  <div class="invalid-feedback">Please enter a valid email.</div>
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label small muted2" for="company">Company / Org (optional)</label>
+                  <input class="form-control" id="company" name="company" type="text" placeholder="e.g., Acme Co." autocomplete="organization">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small muted2" for="usecase">Primary use case</label>
+                  <select class="form-select" id="usecase" name="usecase">
+                    <option>Couples</option>
+                    <option>Teams</option>
+                    <option>Customer Support / Sales</option>
+                    <option>Coaching / HR</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
+                <div class="col-12">
+                  <label class="form-label small muted2" for="message">What would make Truce a “must-have”?</label>
+                  <textarea class="form-control" id="message" name="message" rows="4"
+                            placeholder="Tell us your situation, pain points, and what success looks like."></textarea>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="consent" name="consent" required>
+                    <label class="form-check-label small muted" for="consent">
+                      I agree to be contacted about Truce.ai and understand this is an early beta waitlist.
+                    </label>
+                    <div class="invalid-feedback">Please check the box to continue.</div>
+                  </div>
+                </div>
+              </div>
+
+              <input type="hidden" name="source" value="landing_page">
+              <input type="hidden" id="pageUrl" name="pageUrl" value="">
+
+              <div class="d-flex flex-wrap gap-2 align-items-center mt-4">
+                <button id="submitBtn" class="btn btn-brand rounded-4 px-4 py-2" type="submit">
+                  Request early access <i class="bi bi-arrow-right ms-1"></i>
+                </button>
+                <span class="small muted2">No spam. Unsubscribe anytime.</span>
+              </div>
+            </form>
+
+            <!-- Survey -->
+            <form id="surveyForm" class="d-none mt-4" novalidate>
+              <div class="glass p-3" style="box-shadow:none;">
+                <div class="fw-semibold mb-3">What’s your main goal with Truce?</div>
+
+                <div class="d-grid gap-2">
+                  <label class="btn btn-soft rounded-4 text-start py-2">
+                    <input class="form-check-input me-2" type="radio" name="goal" value="Stop fights from escalating" required>
+                    Stop fights from escalating
+                  </label>
+                  <label class="btn btn-soft rounded-4 text-start py-2">
+                    <input class="form-check-input me-2" type="radio" name="goal" value="Communicate more clearly under stress">
+                    Communicate more clearly under stress
+                  </label>
+                  <label class="btn btn-soft rounded-4 text-start py-2">
+                    <input class="form-check-input me-2" type="radio" name="goal" value="Improve team conflict & meetings">
+                    Improve team conflict & meetings
+                  </label>
+                  <label class="btn btn-soft rounded-4 text-start py-2">
+                    <input class="form-check-input me-2" type="radio" name="goal" value="Stay calm in support/sales calls">
+                    Stay calm in support/sales calls
+                  </label>
+                  <label class="btn btn-soft rounded-4 text-start py-2">
+                    <input class="form-check-input me-2" type="radio" name="goal" value="Other">
+                    Other
+                  </label>
+                </div>
+
+                <div class="row g-2 mt-3">
+                  <div class="col-12">
+                    <label class="form-label small muted2" for="surveyDetail">One sentence (optional)</label>
+                    <input class="form-control" id="surveyDetail" name="detail" type="text"
+                           placeholder="e.g., ‘We misread tone and it spirals fast.’">
+                  </div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2 align-items-center mt-4">
+                  <button id="surveyBtn" class="btn btn-brand rounded-4 px-3" type="submit">
+                    Submit answer <i class="bi bi-send ms-1"></i>
+                  </button>
+                  <button id="skipSurveyBtn" class="btn btn-soft rounded-4 px-3" type="button">
+                    Skip
+                  </button>
+                  <span id="surveyStatus" class="small muted2"></span>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="glass p-4 h-100 reveal delay-1">
+            <h5 class="fw-bold mb-2">Founding waitlist perks</h5>
+            <p class="muted mb-4">A reason to join now — without gimmicks.</p>
+
+            <div class="d-grid gap-3">
+              <div class="d-flex gap-3">
+                <div class="icon-pill"><i class="bi bi-stars"></i></div>
+                <div>
+                  <div class="fw-semibold">Priority access</div>
+                  <div class="muted2" style="font-size:.95rem;">Get invited earlier as beta waves open.</div>
+                </div>
+              </div>
+
+              <div class="d-flex gap-3">
+                <div class="icon-pill"><i class="bi bi-signpost-split"></i></div>
+                <div>
+                  <div class="fw-semibold">Shape the MVP</div>
+                  <div class="muted2" style="font-size:.95rem;">Your feedback influences features and safety controls.</div>
+                </div>
+              </div>
+
+              <div class="d-flex gap-3">
+                <div class="icon-pill"><i class="bi bi-chat-dots"></i></div>
+                <div>
+                  <div class="fw-semibold">Founding interviews</div>
+                  <div class="muted2" style="font-size:.95rem;">Optional 10-min call to capture your real scenarios.</div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="divider my-4">
+
+            <div class="d-flex flex-wrap gap-2">
+              <a href="#top" class="btn btn-soft rounded-4 px-3">Back to top</a>
+              <a href="#share" class="btn btn-soft rounded-4 px-3">Share</a>
+              <a href="#waitlist" class="btn btn-brand rounded-4 px-3">Join waitlist</a>
+            </div>
+
+            <p class="muted2 mt-4 mb-0" style="font-size:.95rem;">
+              Next traction move: a 20–30s teaser showing “heat rises → Truce Cue fades in → both reset.”
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="d-flex flex-column flex-md-row justify-content-between gap-2 align-items-md-center">
+        <div class="small">© <span id="year"></span> Truce.ai • Privacy-first • Beta</div>
+        <div class="small">Contact: <span class="text-white-50">hello@truce.ai</span></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile sticky CTA -->
+  <div class="mobile-cta">
+    <div class="container d-flex align-items-center justify-content-between gap-2">
+      <div class="d-flex align-items-center gap-2">
+        <span class="pulse-dot" style="width:8px;height:8px;"></span>
+        <div class="small">
+          <div class="fw-semibold">Join the Truce waitlist</div>
+          <div class="muted2" style="font-size:.82rem;">Early access + founding perks</div>
+        </div>
+      </div>
+      <a class="btn btn-brand rounded-4 px-3 py-2" href="#waitlist">
+        Join <i class="bi bi-arrow-right ms-1"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // =========================
+    // CONFIG — replace these
+    // =========================
+    const FORM_ENDPOINT = "https://formspree.io/f/xvzpoqer";
+    const SURVEY_ENDPOINT = FORM_ENDPOINT; // or "/api/survey"
+
+    // HERO MEDIA (choose one)
+    const HERO_VIDEO_MP4 = ""; // e.g., "assets/hero-conversation.mp4"
+    const HERO_POSTER   = ""; // e.g., "assets/hero-poster.jpg"
+    const HERO_IMAGE    = ""; // e.g., "assets/hero-still.jpg"
+
+    // Use-case images (optional)
+    const IMG_COUPLES   = ""; // e.g., "assets/couples.jpg"
+    const IMG_TEAMS     = ""; // e.g., "assets/teams.jpg"
+    const IMG_SUPPORT   = ""; // e.g., "assets/support.jpg"
+
+    // Optional local audio preview for Truce Cue demo button
+    const TRUCE_CUE_PREVIEW_AUDIO = ""; // e.g., "assets/truce-cue-preview.mp3"
+
+    // =========================
+    // INIT
+    // =========================
+    const form = document.getElementById("waitlistForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const alertBox = document.getElementById("alertBox");
+    const confirmPanel = document.getElementById("confirmPanel");
+    const surveyForm = document.getElementById("surveyForm");
+    const surveyBtn = document.getElementById("surveyBtn");
+    const skipSurveyBtn = document.getElementById("skipSurveyBtn");
+    const surveyStatus = document.getElementById("surveyStatus");
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("pageUrl").value = window.location.href;
+
+    // Premium top loader (non-blocking)
+    const topBar = document.getElementById("topBar");
+    (function runTopBar(){
+      topBar.style.width = "18%";
+      setTimeout(()=> topBar.style.width = "52%", 120);
+      setTimeout(()=> topBar.style.width = "84%", 260);
+      window.addEventListener("load", () => {
+        topBar.style.width = "100%";
+        setTimeout(()=> {
+          const tl = document.querySelector(".top-loader");
+          if(!tl) return;
+          tl.style.opacity = "0";
+          setTimeout(()=> tl.remove(), 220);
+        }, 220);
+      });
+    })();
+
+    // Reveal animations on scroll (lightweight)
+    const reveals = Array.from(document.querySelectorAll(".reveal"));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add("show"); });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+
+    // Share buttons
+    const copyBtn = document.getElementById("copyLinkBtn");
+    const tweetBtn = document.getElementById("tweetBtn");
+    const shareText = encodeURIComponent("Truce.ai: real-time escalation risk + calm prompts + optional Truce Cue (music). Join the waitlist:");
+    const shareUrl = encodeURIComponent(window.location.href);
+    tweetBtn.href = `https://twitter.com/intent/tweet?text=${shareText}%20${shareUrl}`;
+
+    copyBtn?.addEventListener("click", async () => {
+      try{
+        await navigator.clipboard.writeText(window.location.href);
+        copyBtn.innerHTML = 'Copied <i class="bi bi-check2 ms-1"></i>';
+        setTimeout(()=> copyBtn.innerHTML = 'Copy link <i class="bi bi-link-45deg ms-1"></i>', 1100);
+      } catch(e){
+        copyBtn.innerHTML = 'Copy failed <i class="bi bi-x ms-1"></i>';
+        setTimeout(()=> copyBtn.innerHTML = 'Copy link <i class="bi bi-link-45deg ms-1"></i>', 1100);
+      }
+    });
+
+    // Hero media setup (video preferred)
+    const heroVideo = document.getElementById("heroVideo");
+    const heroVideoSrc = document.getElementById("heroVideoSrc");
+    const heroImage = document.getElementById("heroImage");
+
+    function setHeroMedia(){
+      if(HERO_VIDEO_MP4){
+        heroVideoSrc.src = HERO_VIDEO_MP4;
+        heroVideo.load();
+        if(HERO_POSTER) heroVideo.setAttribute("poster", HERO_POSTER);
+        heroVideo.style.display = "block";
+        heroImage.style.display = "none";
+      } else if(HERO_IMAGE){
+        heroVideo.style.display = "none";
+        heroImage.src = HERO_IMAGE;
+        heroImage.style.display = "block";
+      } else {
+        heroVideo.style.display = "none";
+        heroImage.style.display = "none";
+      }
+    }
+    setHeroMedia();
+
+    // Use-case images setup (optional)
+    function setImg(id, url){
+      const el = document.getElementById(id);
+      if(!el) return;
+      if(url){
+        el.src = url;
+        el.style.display = "block";
+      } else {
+        el.style.display = "none";
+      }
+    }
+    setImg("imgCouples", IMG_COUPLES);
+    setImg("imgTeams", IMG_TEAMS);
+    setImg("imgSupport", IMG_SUPPORT);
+
+    function showAlert(type, message){
+      alertBox.className = "alert mb-3 alert-" + type;
+      alertBox.textContent = message;
+      alertBox.classList.remove("d-none");
+    }
+    function setLoading(loading){
+      submitBtn.disabled = loading;
+      submitBtn.innerHTML = loading
+        ? 'Submitting… <span class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>'
+        : 'Request early access <i class="bi bi-arrow-right ms-1"></i>';
+    }
+
+    // Truce Cue preview button (concept demo)
+    const cueBtn = document.getElementById("cuePreviewBtn");
+    const cueAudio = document.getElementById("cueAudio");
+    let cuePlaying = false;
+
+    function initCueAudio(){
+      if(TRUCE_CUE_PREVIEW_AUDIO){
+        cueAudio.src = TRUCE_CUE_PREVIEW_AUDIO;
+        cueAudio.style.display = "none";
+      }
+    }
+    initCueAudio();
+
+    cueBtn?.addEventListener("click", async () => {
+      // If no audio file configured, just animate the button as a “concept preview”
+      if(!TRUCE_CUE_PREVIEW_AUDIO){
+        cueBtn.innerHTML = 'Previewing… <i class="bi bi-soundwave ms-1"></i>';
+        cueBtn.disabled = true;
+        setTimeout(() => {
+          cueBtn.disabled = false;
+          cueBtn.innerHTML = 'Preview <i class="bi bi-play-fill ms-1"></i>';
+        }, 900);
+        return;
+      }
+
+      try{
+        if(!cuePlaying){
+          await cueAudio.play();
+          cuePlaying = true;
+          cueBtn.innerHTML = 'Stop <i class="bi bi-stop-fill ms-1"></i>';
+        } else {
+          cueAudio.pause();
+          cueAudio.currentTime = 0;
+          cuePlaying = false;
+          cueBtn.innerHTML = 'Preview <i class="bi bi-play-fill ms-1"></i>';
+        }
+      } catch(e){
+        cueBtn.innerHTML = 'Preview <i class="bi bi-play-fill ms-1"></i>';
+      }
+    });
+
+    cueAudio?.addEventListener("ended", () => {
+      cuePlaying = false;
+      if(cueBtn) cueBtn.innerHTML = 'Preview <i class="bi bi-play-fill ms-1"></i>';
+    });
+
+    // =========================
+    // WAITLIST SUBMIT
+    // =========================
+    let lastSubmittedEmail = "";
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      alertBox.classList.add("d-none");
+
+      if(!form.checkValidity()){
+        form.classList.add("was-validated");
+        return;
+      }
+
+      if(!FORM_ENDPOINT || FORM_ENDPOINT.includes("REPLACE_ME")){
+        showAlert("warning", "Form endpoint isn’t configured. Replace FORM_ENDPOINT with your Formspree URL or a backend route.");
+        return;
+      }
+
+      setLoading(true);
+
+      try{
+        const formData = new FormData(form);
+        const email = (formData.get("email") || "").toString().trim().toLowerCase();
+        lastSubmittedEmail = email;
+
+        if(email) formData.append("dedupeKey", "truce_waitlist_" + email);
+        formData.append("pageUrl", window.location.href);
+
+        const res = await fetch(FORM_ENDPOINT, {
+          method: "POST",
+          headers: { "Accept": "application/json" },
+          body: formData
+        });
+
+        if(res.ok){
+          showAlert("success", "You’re on the waitlist ✅");
+          confirmPanel.classList.remove("d-none");
+          surveyForm.classList.remove("d-none");
+
+          form.reset();
+          form.classList.remove("was-validated");
+        } else {
+          let data = null;
+          try{ data = await res.json(); } catch(_) {}
+          const msg = data?.errors?.[0]?.message || "Something went wrong. Please try again in a moment.";
+          showAlert("danger", msg);
+        }
+      } catch(err){
+        showAlert("danger", "Network error. Please try again (or check your endpoint).");
+      } finally{
+        setLoading(false);
+      }
+    });
+
+    // =========================
+    // POST-SUBMIT SURVEY
+    // =========================
+    skipSurveyBtn?.addEventListener("click", () => {
+      surveyForm.classList.add("d-none");
+      surveyStatus.textContent = "All good — see you in the beta.";
+    });
+
+    surveyForm?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      surveyStatus.textContent = "";
+
+      const fd = new FormData(surveyForm);
+      const goal = (fd.get("goal") || "").toString().trim();
+      const detail = (fd.get("detail") || "").toString().trim();
+
+      if(!goal){
+        surveyStatus.textContent = "Pick one option above 👆";
+        return;
+      }
+
+      if(!SURVEY_ENDPOINT || SURVEY_ENDPOINT.includes("REPLACE_ME")){
+        surveyStatus.textContent = "Survey endpoint isn’t configured (but you’re still on the waitlist).";
+        return;
+      }
+
+      surveyBtn.disabled = true;
+      surveyBtn.innerHTML = 'Submitting… <span class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>';
+
+      try{
+        const payload = new FormData();
+        payload.append("type", "post_submit_survey");
+        payload.append("goal", goal);
+        payload.append("detail", detail);
+        payload.append("email", lastSubmittedEmail);
+        payload.append("pageUrl", window.location.href);
+
+        const res = await fetch(SURVEY_ENDPOINT, {
+          method: "POST",
+          headers: { "Accept": "application/json" },
+          body: payload
+        });
+
+        if(res.ok){
+          surveyStatus.textContent = "Thanks — that helps a ton 🙌";
+          setTimeout(() => surveyForm.classList.add("d-none"), 900);
+        } else {
+          surveyStatus.textContent = "Couldn’t submit right now — no worries. You’re still on the waitlist.";
+        }
+      } catch(err){
+        surveyStatus.textContent = "Network error — no worries. You’re still on the waitlist.";
+      } finally{
+        surveyBtn.disabled = false;
+        surveyBtn.innerHTML = 'Submit answer <i class="bi bi-send ms-1"></i>';
+      }
+    });
+  </script>
+</body>
+</html>
+
