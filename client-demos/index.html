@@ -1,1 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Client Demos · Udit Ennam</title>
+
+  <!-- Reuse your main portfolio theme -->
+  <link rel="stylesheet" href="../style.css" />
+
+  <!-- Light, self-contained additions (won't break your main theme) -->
+  <style>
+    :root { color-scheme: dark; }
+
+    .demo-wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    .demo-topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom: 28px;
+    }
+
+    .demo-back{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      opacity:.9;
+    }
+    .demo-back:hover{ opacity:1; }
+
+    .demo-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      text-decoration:none;
+      white-space:nowrap;
+    }
+
+    .demo-hero{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      align-items: stretch;
+      margin: 22px 0 26px;
+    }
+
+    .demo-heroCard{
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: radial-gradient(1200px 600px at 10% 0%, rgba(120,140,255,.14), rgba(255,255,255,.02));
+      padding: 22px;
+      overflow:hidden;
+    }
+
+    .demo-title{
+      font-size: clamp(28px, 3.2vw, 40px);
+      line-height: 1.1;
+      margin: 0 0 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .demo-subtitle{
+      margin: 0;
+      opacity: .85;
+      max-width: 60ch;
+    }
+
+    .demo-metrics{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .demo-metric{
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      padding: 12px 12px;
+    }
+    .demo-metric strong{
+      display:block;
+      font-size: 14px;
+      letter-spacing: .01em;
+    }
+    .demo-metric span{
+      display:block;
+      font-size: 12px;
+      opacity: .75;
+      margin-top: 4px;
+    }
+
+    .demo-note{
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      padding: 18px 18px;
+      height: 100%;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap: 14px;
+    }
+    .demo-note h2{
+      font-size: 13px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      opacity: .65;
+      margin: 0;
+    }
+    .demo-note p{
+      margin: 0;
+      opacity: .85;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .demo-sectionHead{
+      margin: 34px 0 12px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 16px;
+    }
+    .demo-sectionHead h3{
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+      opacity: .95;
+    }
+    .demo-sectionHead .demo-muted{
+      margin: 0;
+      font-size: 13px;
+      opacity: .65;
+    }
+
+    .demo-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .demo-card{
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      padding: 18px;
+      text-decoration:none;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      min-height: 150px;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+    .demo-card:hover{
+      transform: translateY(-4px);
+      background: rgba(255,255,255,.05);
+      border-color: rgba(255,255,255,.18);
+    }
+
+    .demo-cardTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+    }
+
+    .demo-card h4{
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+    }
+    .demo-card p{
+      margin: 0;
+      opacity: .78;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .demo-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 6px;
+    }
+    .demo-tag{
+      font-size: 12px;
+      opacity: .85;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      white-space: nowrap;
+    }
+
+    .demo-footer{
+      margin-top: 40px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      opacity: .75;
+      font-size: 13px;
+    }
+
+    @media (max-width: 920px){
+      .demo-hero{ grid-template-columns: 1fr; }
+      .demo-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px){
+      .demo-metrics{ grid-template-columns: 1fr; }
+      .demo-grid{ grid-template-columns: 1fr; }
+      .demo-topbar{ flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="demo-wrap">
+    <!-- Top Bar -->
+    <div class="demo-topbar">
+      <a class="demo-back demo-pill" href="../">
+        <span aria-hidden="true">←</span>
+        <span>Back to portfolio</span>
+      </a>
+
+      <!-- Optional: quick action(s) -->
+      <a class="demo-pill" href="../#contact">
+        <span aria-hidden="true">✉</span>
+        <span>Contact</span>
+      </a>
+    </div>
+
+    <!-- Hero -->
+    <section class="demo-hero" aria-label="Client demo vault intro">
+      <div class="demo-heroCard">
+        <h1 class="demo-title">Client Demo Vault</h1>
+        <p class="demo-subtitle">
+          Live website concepts built end-to-end. Clean structure, premium spacing, and real-world UX—so a client can click and immediately “get it.”
+        </p>
+
+        <div class="demo-metrics" role="list" aria-label="Demo highlights">
+          <div class="demo-metric" role="listitem">
+            <strong>Fast to browse</strong>
+            <span>Each demo is its own folder + URL</span>
+          </div>
+          <div class="demo-metric" role="listitem">
+            <strong>Production mindset</strong>
+            <span>Clear IA, reusable components, readable CSS</span>
+          </div>
+          <div class="demo-metric" role="listitem">
+            <strong>Client-ready</strong>
+            <span>Copy, layout, and CTAs feel real</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="demo-note">
+        <div>
+          <h2>How to use this</h2>
+          <p>
+            Pick a business type below. Each link opens a live demo site.
+            If you’re a recruiter: this is a quick look at how I design interfaces and ship polished front-end deliverables.
+          </p>
+        </div>
+        <div class="demo-tags" aria-label="Principles">
+          <span class="demo-tag">Simple over clever</span>
+          <span class="demo-tag">Premium spacing</span>
+          <span class="demo-tag">Mobile-first</span>
+          <span class="demo-tag">Clear CTAs</span>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Demos -->
+    <div class="demo-sectionHead">
+      <h3>Live demos</h3>
+      <p class="demo-muted">Click to open the live site.</p>
+    </div>
+
+    <section class="demo-grid" aria-label="Demo list">
+      <!-- 1 -->
+      <a class="demo-card" href="./skyhigh-smokeshop/">
+        <div class="demo-cardTop">
+          <h4>SkyHigh Smoke Shop</h4>
+          <span aria-hidden="true">↗</span>
+        </div>
+        <p>Retail storefront concept: product sections, promos, and location-first conversion.</p>
+        <div class="demo-tags" aria-label="Tags">
+          <span class="demo-tag">Retail</span>
+          <span class="demo-tag">Landing + Catalog</span>
+          <span class="demo-tag">Local SEO</span>
+        </div>
+      </a>
+
+      <!-- 2 -->
+      <a class="demo-card" href="./turtle-spa-house/">
+        <div class="demo-cardTop">
+          <h4>Turtle Spa House</h4>
+          <span aria-hidden="true">↗</span>
+        </div>
+        <p>Luxury spa vibe: hero + amenities + reviews + location flow with premium visuals.</p>
+        <div class="demo-tags" aria-label="Tags">
+          <span class="demo-tag">Hospitality</span>
+          <span class="demo-tag">Bookings</span>
+          <span class="demo-tag">Premium UI</span>
+        </div>
+      </a>
+
+      <!-- 3 -->
+      <a class="demo-card" href="./auto-repair-pro/">
+        <div class="demo-cardTop">
+          <h4>Auto Repair Pro</h4>
+          <span aria-hidden="true">↗</span>
+        </div>
+        <p>Service business layout: trust signals, services, scheduling CTA, and FAQ.</p>
+        <div class="demo-tags" aria-label="Tags">
+          <span class="demo-tag">Services</span>
+          <span class="demo-tag">Scheduling</span>
+          <span class="demo-tag">Trust UX</span>
+        </div>
+      </a>
+
+      <!-- Optional placeholders you can activate later -->
+      <a class="demo-card" href="./flowfuel/">
+        <div class="demo-cardTop">
+          <h4>FlowFuel (Brand landing)</h4>
+          <span aria-hidden="true">↗</span>
+        </div>
+        <p>Product/brand concept: story-led sections, pricing tiers, and distribution CTA.</p>
+        <div class="demo-tags" aria-label="Tags">
+          <span class="demo-tag">DTC</span>
+          <span class="demo-tag">Brand</span>
+          <span class="demo-tag">Conversion</span>
+        </div>
+      </a>
+
+      <a class="demo-card" href="./truce-ai/">
+        <div class="demo-cardTop">
+          <h4>Truce.ai (Product landing)</h4>
+          <span aria-hidden="true">↗</span>
+        </div>
+        <p>Startup landing concept: positioning, use-cases, and demo narrative.</p>
+        <div class="demo-tags" aria-label="Tags">
+          <span class="demo-tag">SaaS</span>
+          <span class="demo-tag">Product</span>
+          <span class="demo-tag">Storytelling</span>
+        </div>
+      </a>
+
+      <a class="demo-card" href="./misc/">
+        <div class="demo-cardTop">
+          <h4>Misc Experiments</h4>
+          <span aria-hidden="true">↗</span>
+        </div>
+        <p>Small UI/UX patterns and layout experiments I reuse across projects.</p>
+        <div class="demo-tags" aria-label="Tags">
+          <span class="demo-tag">Components</span>
+          <span class="demo-tag">UI Patterns</span>
+          <span class="demo-tag">Sandbox</span>
+        </div>
+      </a>
+    </section>
+
+    <footer class="demo-footer">
+      <span>© 2025 Udit Ennam</span>
+      <span>Paths: <code style="opacity:.85;">/client-demos/&lt;demo-name&gt;/</code></span>
+    </footer>
+  </main>
+</body>
+</html>
 
