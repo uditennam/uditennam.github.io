@@ -1,1 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Landing Pages · Udit Ennam</title>
+
+  <!-- Reuse your main portfolio theme -->
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+    :root { color-scheme: dark; }
+
+    .hub-wrap{ max-width:1100px; margin:0 auto; padding:32px 20px 80px; }
+    .hub-topbar{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:28px; }
+
+    .hub-pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 14px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+      text-decoration:none; white-space:nowrap; opacity:.92;
+    }
+    .hub-pill:hover{ opacity:1; }
+
+    .hub-hero{
+      display:grid; grid-template-columns:1.2fr .8fr;
+      gap:18px; align-items:stretch; margin:22px 0 26px;
+    }
+
+    .hub-heroCard{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: radial-gradient(1200px 600px at 10% 0%, rgba(120,140,255,.14), rgba(255,255,255,.02));
+      padding:22px; overflow:hidden;
+    }
+
+    .hub-title{
+      font-size:clamp(28px, 3.2vw, 40px);
+      line-height:1.1; margin:0 0 8px; letter-spacing:-0.02em;
+    }
+
+    .hub-subtitle{ margin:0; opacity:.85; max-width:68ch; line-height:1.5; }
+
+    .hub-metrics{
+      display:grid; grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:10px; margin-top:18px;
+    }
+
+    .hub-metric{
+      border-radius:14px; border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.18); padding:12px;
+    }
+    .hub-metric strong{ display:block; font-size:14px; letter-spacing:.01em; }
+    .hub-metric span{ display:block; font-size:12px; opacity:.75; margin-top:4px; line-height:1.4; }
+
+    .hub-note{
+      border-radius:18px; border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.03); padding:18px; height:100%;
+      display:flex; flex-direction:column; justify-content:space-between; gap:14px;
+    }
+    .hub-note h2{ font-size:13px; letter-spacing:.18em; text-transform:uppercase; opacity:.65; margin:0; }
+    .hub-note p{ margin:0; opacity:.85; font-size:14px; line-height:1.5; }
+
+    .hub-sectionHead{
+      margin:34px 0 12px;
+      display:flex; align-items:flex-end; justify-content:space-between; gap:16px;
+    }
+    .hub-sectionHead h3{ margin:0; font-size:18px; letter-spacing:-0.01em; opacity:.95; }
+    .hub-sectionHead .hub-muted{ margin:0; font-size:13px; opacity:.65; }
+
+    .hub-grid{
+      display:grid; grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:14px; margin-top:12px;
+    }
+
+    .hub-card{
+      border-radius:18px; border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.03);
+      padding:18px; text-decoration:none;
+      display:flex; flex-direction:column; gap:10px;
+      min-height:150px;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+    .hub-card:hover{
+      transform:translateY(-4px);
+      background:rgba(255,255,255,.05);
+      border-color:rgba(255,255,255,.18);
+    }
+
+    .hub-cardTop{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+    .hub-card h4{ margin:0; font-size:16px; letter-spacing:-0.01em; }
+    .hub-card p{ margin:0; opacity:.78; font-size:13px; line-height:1.5; }
+
+    .hub-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:auto; padding-top:6px; }
+    .hub-tag{
+      font-size:12px; opacity:.85;
+      padding:7px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.18);
+      white-space:nowrap;
+    }
+
+    .hub-footer{
+      margin-top:40px; padding-top:18px;
+      border-top:1px solid rgba(255,255,255,.08);
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      opacity:.75; font-size:13px;
+    }
+
+    @media (max-width: 920px){
+      .hub-hero{ grid-template-columns:1fr; }
+      .hub-grid{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+    }
+    @media (max-width: 560px){
+      .hub-metrics{ grid-template-columns:1fr; }
+      .hub-grid{ grid-template-columns:1fr; }
+      .hub-topbar{ flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="hub-wrap">
+    <div class="hub-topbar">
+      <a class="hub-pill" href="../">
+        <span aria-hidden="true">←</span>
+        <span>Back to portfolio</span>
+      </a>
+
+      <a class="hub-pill" href="../#contact">
+        <span aria-hidden="true">✉</span>
+        <span>Contact</span>
+      </a>
+    </div>
+
+    <section class="hub-hero" aria-label="Landing pages hub intro">
+      <div class="hub-heroCard">
+        <h1 class="hub-title">Landing Pages</h1>
+        <p class="hub-subtitle">
+          Focused, conversion-oriented landing pages. Each page is built with clear messaging,
+          premium spacing, and a “one-goal” layout — ideal for product launches and demos.
+        </p>
+
+        <div class="hub-metrics" role="list" aria-label="Highlights">
+          <div class="hub-metric" role="listitem">
+            <strong>One goal per page</strong>
+            <span>Clear CTA + minimal distractions</span>
+          </div>
+          <div class="hub-metric" role="listitem">
+            <strong>Reusable sections</strong>
+            <span>Hero → proof → features → FAQ</span>
+          </div>
+          <div class="hub-metric" role="listitem">
+            <strong>Fast to deploy</strong>
+            <span>Folder-based URLs on GitHub Pages</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hub-note">
+        <div>
+          <h2>Structure</h2>
+          <p>
+            Each page lives at:
+            <br />
+            <code style="opacity:.85;">/landing-pages/&lt;name&gt;/</code>
+            <br /><br />
+            Create a folder, add <code style="opacity:.85;">index.html</code>, commit — it’s live.
+          </p>
+        </div>
+
+        <div class="hub-tags" aria-label="Principles">
+          <span class="hub-tag">Premium spacing</span>
+          <span class="hub-tag">Mobile-first</span>
+          <span class="hub-tag">Fast load</span>
+          <span class="hub-tag">Clear CTA</span>
+        </div>
+      </aside>
+    </section>
+
+    <div class="hub-sectionHead">
+      <h3>Pages</h3>
+      <p class="hub-muted">Click to open a live landing page.</p>
+    </div>
+
+    <section class="hub-grid" aria-label="Landing pages list">
+
+      <!-- Truce.ai -->
+      <a class="hub-card" href="./truce-ai/">
+        <div class="hub-cardTop">
+          <h4>Truce.ai</h4>
+          <span aria-hidden="true">↗</span>
+        </div>
+        <p>Conflict de-escalation assistant: positioning, use-cases, and a demo-first narrative.</p>
+        <div class="hub-tags">
+          <span class="hub-tag">SaaS</span>
+          <span class="hub-tag">AI</span>
+          <span class="hub-tag">Product</span>
+        </div>
+      </a>
+
+      <!-- Dental-bot -->
+      <a class="hub-card" href="./dental-bot/">
+        <div class="hub-cardTop">
+          <h4>Dental-bot</h4>
+          <span aria-hidden="true">↗</span>
+        </div>
+        <p>Patient-friendly intake + FAQ assistant: reduces calls, speeds bookings, improves experience.</p>
+        <div class="hub-tags">
+          <span class="hub-tag">Healthcare</span>
+          <span class="hub-tag">Lead Gen</span>
+          <span class="hub-tag">Automation</span>
+        </div>
+      </a>
+
+      <!-- Add more later -->
+      <a class="hub-card" href="./coming-soon/">
+        <div class="hub-cardTop">
+          <h4>Coming soon</h4>
+          <span aria-hidden="true">↗</span>
+        </div>
+        <p>Placeholder for new campaigns and experiments you spin up quickly.</p>
+        <div class="hub-tags">
+          <span class="hub-tag">Template</span>
+          <span class="hub-tag">Campaign</span>
+          <span class="hub-tag">Fast</span>
+        </div>
+      </a>
+
+    </section>
+
+    <footer class="hub-footer">
+      <span>© 2025 Udit Ennam</span>
+      <span>Path: <code style="opacity:.85;">/landing-pages/&lt;name&gt;/</code></span>
+    </footer>
+  </main>
+</body>
+</html>
 
