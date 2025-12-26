@@ -1,1 +1,954 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SkyHigh Smoke & Vape | Charlotte, NC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <!-- Bootstrap Icons (optional for nice icons) -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+  >
+
+  <style>
+    :root {
+      --bg-main: #050608;
+      --surface: #0b0d13;
+      --surface-soft: #11141f;
+      --accent: #ff4b8b;
+      --accent-soft: rgba(255, 75, 139, 0.2);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top, #151a28 0, #050608 45%, #020308 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      scroll-behavior: smooth;
+    }
+
+    body.overflow-hidden {
+      overflow: hidden;
+    }
+
+    /* Loader overlay */
+    #loader-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: radial-gradient(circle at top, #1b1f2f 0, #050608 55%, #000000 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: var(--text-main);
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    #loader-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-text {
+      font-size: 2rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .loader-sub {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    /* New smoke-style loader */
+   .loader-cloud {
+     display: flex;
+     align-items: flex-end;
+     justify-content: center;
+     gap: 10px;
+     height: 40px;
+   }
+
+   .loader-cloud span {
+     width: 10px;
+     height: 10px;
+     border-radius: 999px;
+     background: radial-gradient(circle, #ffffff, rgba(255, 255, 255, 0.1));
+     opacity: 0.2;
+     animation: puff 1.4s ease-in-out infinite;
+   }
+
+   .loader-cloud span:nth-child(2) {
+     animation-delay: 0.2s;
+   }
+
+   .loader-cloud span:nth-child(3) {
+     animation-delay: 0.4s;
+   }
+
+   @keyframes puff {
+     0% {
+       transform: translateY(8px) scale(0.9);
+       opacity: 0.0;
+     }
+     20% {
+       opacity: 0.45;
+     }
+     50% {
+       transform: translateY(-4px) scale(1.1);
+       opacity: 0.7;
+     }
+     80% {
+       opacity: 0.3;
+     }
+     100% {
+       transform: translateY(-14px) scale(1.2);
+       opacity: 0;
+     }
+   }
+
+
+    /* Transparent navbar */
+    .navbar {
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+      padding-top: 6px;
+      padding-bottom: 6px;
+    }
+
+    .navbar-transparent {
+      background: linear-gradient(to bottom, rgba(5, 6, 8, 0.9), rgba(5, 6, 8, 0));
+      backdrop-filter: blur(8px);
+    }
+
+    .navbar-scrolled {
+      background: rgba(5, 6, 8, 0.98);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+    }
+
+    .navbar-brand span {
+      background: linear-gradient(120deg, #ff4b8b, #ffb347);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    .navbar .navbar-brand,
+    .navbar .nav-link {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    .nav-link {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .nav-link.active,
+    .nav-link:focus,
+    .nav-link:hover {
+      color: #ffffff !important;
+    }
+
+    /* Hero */
+    header.hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 100px; /* account for navbar */
+      padding-bottom: 80px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(255, 75, 139, 0.25), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(93, 63, 211, 0.35), transparent 60%),
+        linear-gradient(135deg, #020308, #050608);
+      opacity: 0.95;
+      pointer-events: none;
+    }
+
+    .hero-smoke {
+      position: absolute;
+      inset: -40%;
+      background-image: url("images/hero-bg.jpg");
+      background-size: cover;
+      background-position: center;
+      mix-blend-mode: screen;
+      opacity: 0.16;
+      filter: blur(2px);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.28rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .hero-tag-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: radial-gradient(circle, #4ade80, #22c55e);
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.7);
+    }
+
+    .hero-title {
+      font-size: clamp(2.6rem, 4vw, 3.4rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.7rem;
+    }
+
+    .hero-gradient {
+      background: linear-gradient(120deg, #ffffff, #ffb347);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      max-width: 520px;
+      color: var(--text-muted);
+      font-size: 0.98rem;
+    }
+
+    .hero-buttons {
+      margin-top: 1.4rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+    }
+
+    .btn-accent {
+      background: linear-gradient(120deg, #ff4b8b, #ffb347);
+      border: none;
+      color: #050608;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.8rem;
+      padding-inline: 1.7rem;
+    }
+
+    .btn-ghost {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+      padding-inline: 1.4rem;
+      background: rgba(15, 23, 42, 0.65);
+    }
+
+    .hero-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.6rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .hero-badge {
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .hero-card {
+      position: relative;
+      border-radius: 22px;
+      background: radial-gradient(circle at top, #111827, #020617);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+    }
+
+    .hero-card-inner {
+      padding: 1rem;
+    }
+
+    .hero-card-img {
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-card-img img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.03);
+    }
+
+    .hero-card-chip {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.68rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(248, 250, 252, 0.25);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #e5e7eb;
+    }
+
+    .hero-card-gradient {
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 45%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+    }
+
+    .hero-card-label {
+      position: absolute;
+      left: 1rem;
+      bottom: 0.9rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-shadow: 0 8px 20px rgba(0,0,0,0.9);
+    }
+
+    .hero-card-label span {
+      display: inline-block;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.85);
+      margin-right: 0.4rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #e5e7eb;
+    }
+
+    section {
+      padding: 72px 0;
+    }
+
+    .section-heading {
+      font-weight: 600;
+      font-size: 1.4rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      max-width: 520px;
+    }
+
+    /* Products */
+    .product-card {
+      background: radial-gradient(circle at top, #111827, #020617);
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      padding: 0.9rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .product-image {
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+      background: #020617;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .product-card:hover .product-image img {
+      transform: scale(1.05);
+    }
+
+    .product-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .product-tagline {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.45rem;
+    }
+
+    .product-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: auto;
+      font-size: 0.7rem;
+    }
+
+    .product-pill {
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    /* Contact + Map */
+    .card-soft {
+      background: radial-gradient(circle at top left, rgba(255, 75, 139, 0.08), transparent 45%), #020617;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85);
+      padding: 1.4rem;
+    }
+
+    .form-control,
+    .form-select {
+      background-color: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--text-main);
+      font-size: 0.9rem;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(255, 75, 139, 0.7);
+      background-color: rgba(15, 23, 42, 0.98);
+      color: #fff;
+    }
+
+    .form-control::placeholder {
+      color: #6b7280;
+      font-size: 0.86rem;
+    }
+
+    .map-wrapper {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
+      height: 320px;
+    }
+
+    .map-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(31, 41, 55, 0.9);
+      padding: 22px 0 30px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: radial-gradient(circle at top, rgba(15,23,42,0.4), #020308);
+    }
+
+    .footer-brand {
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.76rem;
+      color: #e5e7eb;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-left: 1.1rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+    }
+
+    
+
+    @media (max-width: 767.98px) {
+      header.hero {
+        padding-top: 88px;
+      }
+
+      .hero-card-img img {
+        height: 220px;
+      }
+
+      .footer-links {
+        margin-top: 0.5rem;
+      }
+
+      .footer-links a {
+        margin-left: 0;
+        margin-right: 1.1rem;
+      }
+
+      
+    }
+  </style>
+</head>
+<body class="overflow-hidden">
+
+  <!-- Loader overlay -->
+  <div id="loader-overlay">
+    <div class="loader-text">Igniting the vibes...</div>
+    <div class="loader-sub">Smooth hits loading.</div>
+    <div class="loader-cloud">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-transparent">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#hero">
+        <i class="bi bi-cloud-haze2-fill"></i>
+        <span>SkyHigh Smoke &amp; Vape</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav align-items-lg-center">
+          <li class="nav-item">
+            <a class="nav-link active" href="#products">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#location">Location</a>
+          </li>
+          <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+            <a class="btn btn-sm btn-accent rounded-pill" href="#contact">
+              <i class="bi bi-chat-dots me-1"></i> Get in touch
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header id="hero" class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-smoke"></div>
+
+    <div class="container hero-content">
+      <div class="row align-items-center gy-4">
+        <div class="col-lg-6">
+          <div class="hero-tag">
+            <span class="hero-tag-dot"></span>
+            Local • 21+ Only • Charlotte, NC
+          </div>
+          <h1 class="hero-title">
+            <span class="hero-gradient">Smooth hits.</span><br>
+            Clean vibes. All in one shop.
+          </h1>
+          <p class="hero-subtitle">
+            SkyHigh Smoke &amp; Vape brings you curated disposables, glass, hookah, CBD and more.
+            No online sales, just real people and real recommendations in-store.
+          </p>
+          <div class="hero-buttons">
+            <a href="#products" class="btn btn-accent rounded-pill">
+              Browse Products
+            </a>
+            <a href="#location" class="btn btn-ghost">
+              Find the Shop
+            </a>
+          </div>
+
+          <div class="hero-badge-row">
+            <div class="hero-badge">
+              <i class="bi bi-geo-alt me-1"></i> Charlotte, NC
+            </div>
+            <div class="hero-badge">
+              <i class="bi bi-clock-history me-1"></i> Open late
+            </div>
+            <div class="hero-badge">
+              <i class="bi bi-patch-check me-1"></i> 21+ verified in-store
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-5 offset-lg-1">
+          <div class="hero-card">
+            <div class="hero-card-inner">
+              <div class="hero-card-img">
+                <img
+                  src="images/hero-card-img.jpg"
+                  alt="Smoke & vape shop interior"
+                  loading="lazy"
+                >
+                <div class="hero-card-gradient"></div>
+                <div class="hero-card-chip">
+                  Premium selection
+                </div>
+                <div class="hero-card-label">
+                  <span>Featured</span>
+                  Disposables • Glass • CBD • Hookah
+                </div>
+              </div>
+              <p class="mb-1" style="font-size:0.86rem; color:var(--text-muted);">
+                Check out our in-store lineup of vapes, juices, glass and accessories. Photos are
+                representative — come in to see the full selection.
+              </p>
+              <div class="d-flex align-items-center justify-content-between mt-2" style="font-size:0.8rem;">
+                <div>
+                  <span class="text-muted">No online sales • ID required in-store</span>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-shield-check"></i>
+                  <span class="text-muted">21+ only</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /col -->
+      </div>
+    </div>
+  </header>
+
+  <!-- Products -->
+  <section id="products">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-end justify-content-between mb-4">
+        <div>
+          <div class="section-heading">Products</div>
+          <p class="section-subtitle">
+            We don’t sell online — these images are a preview of what you can expect in-store.
+            Swing by to see the full wall of flavors, glass and accessories.
+          </p>
+        </div>
+        <div class="text-sm-end mt-3 mt-md-0" style="font-size:0.8rem; color:var(--text-muted);">
+          <i class="bi bi-info-circle me-1"></i>
+          Product availability and brands vary over time.
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Product 1 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="product-card">
+            <div class="product-image">
+              <img
+                src="images/disposable-vape-img.jpg"
+                alt="Disposable vapes"
+                loading="lazy"
+              >
+            </div>
+            <div class="product-title">Disposable Vapes</div>
+            <div class="product-tagline">Popular flavors, smooth draw, grab-and-go convenience.</div>
+            <div class="product-pill-row">
+              <div class="product-pill">Nicotine</div>
+              <div class="product-pill">Flavors</div>
+              <div class="product-pill">Salt</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="product-card">
+            <div class="product-image">
+              <img
+                src="images/vape-juice-img.jpg"
+                alt="Vape juice bottles"
+                loading="lazy"
+              >
+            </div>
+            <div class="product-title">Vape Juice</div>
+            <div class="product-tagline">From fruity to classic, pick your go-to juice profile.</div>
+            <div class="product-pill-row">
+              <div class="product-pill">Freebase</div>
+              <div class="product-pill">Salt Nic</div>
+              <div class="product-pill">Variety</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="product-card">
+            <div class="product-image">
+              <img
+                src="images/glass-pipes-img.jpg"
+                alt="Glass pipes and water pipes"
+                loading="lazy"
+              >
+            </div>
+            <div class="product-title">Glass &amp; Water Pipes</div>
+            <div class="product-tagline">Unique glass pieces, rigs, and more for your setup.</div>
+            <div class="product-pill-row">
+              <div class="product-pill">Glass</div>
+              <div class="product-pill">Bowls</div>
+              <div class="product-pill">Rigs</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="product-card">
+            <div class="product-image">
+              <img
+                src="images/hookah-img.jpg"
+                alt="Hookah and accessories"
+                loading="lazy"
+              >
+            </div>
+            <div class="product-title">Hookah &amp; Accessories</div>
+            <div class="product-tagline">Hookah, charcoal, hoses and accessories in one place.</div>
+            <div class="product-pill-row">
+              <div class="product-pill">Hookah</div>
+              <div class="product-pill">Charcoal</div>
+              <div class="product-pill">Hoses</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact & Location -->
+  <section id="contact">
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-lg-5">
+          <div class="section-heading">Contact</div>
+          <p class="section-subtitle mb-3">
+            Have a question about product availability, hours, or directions?
+            Send us a message and we’ll get back to you as soon as we can.
+          </p>
+
+          <div class="card-soft">
+            <!-- NOTE: Set action to your form backend (e.g., Formspree / Netlify Forms) -->
+            <form id="contact-form" action="https://formspree.io/f/mzznjkgd" method="post" novalidate>
+              <div class="mb-3">
+                <label for="name" class="form-label">Name *</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Your full name" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email *</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="you@example.com" required>
+              </div>
+              <div class="mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <input type="tel" id="phone" name="phone" class="form-control" placeholder="(Optional) Phone number">
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label">Message *</label>
+                <textarea id="message" name="message" rows="4" class="form-control" placeholder="Ask us about flavors, hours, or directions..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-accent rounded-pill w-100">
+                <i class="bi bi-send-fill me-1"></i> Send message
+              </button>
+              <p id="form-status" class="mt-2 mb-0" style="font-size:0.78rem; color:var(--text-muted);">
+                By submitting, you confirm you are 21+ and understand that we do not sell products online.
+              </p>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-lg-7" id="location">
+          <div class="section-heading">Location</div>
+          <p class="section-subtitle mb-3">
+            Find us in Charlotte, NC. Tap the map for directions, or save us for your next visit.
+          </p>
+
+          <div class="map-wrapper">
+            <!-- Replace this embed src with the shop's actual Google Maps embed URL -->
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52078.2862406277!2d-80.87262635136722!3d35.333481200000016!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88541d1cd1bf1d45%3A0x3128713d66b39ac2!2sSmoke%20%26%20Vape!5e0!3m2!1sen!2sus!4v1765378587411!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+
+          <div class="mt-3" style="font-size:0.88rem;">
+            <div class="d-flex align-items-center mb-1">
+              <i class="bi bi-geo-alt me-2"></i>
+              <span>123 Example Rd, Charlotte, NC 28200</span>
+            </div>
+            <div class="d-flex align-items-center mb-1">
+              <i class="bi bi-clock me-2"></i>
+              <span>Hours: 10am – 11pm (Mon–Sat), 12pm – 9pm (Sun)</span>
+            </div>
+            <div class="d-flex align-items-center">
+              <i class="bi bi-telephone me-2"></i>
+              <span>(000) 000-0000</span>
+            </div>
+          </div>
+        </div>
+      </div><!-- /row -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container d-flex flex-wrap justify-content-between align-items-center">
+      <div class="footer-brand">
+        SKYHIGH SMOKE &amp; VAPE
+      </div>
+      <div class="footer-links">
+        <a href="#hero">Top</a>
+        <a href="#products">Products</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="mt-2 mt-md-0" style="font-size:0.76rem;">
+        © <span id="year"></span> SkyHigh Smoke &amp; Vape. 21+ only. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Loader: hide after ~2 seconds
+    document.addEventListener('DOMContentLoaded', function () {
+      const loader = document.getElementById('loader-overlay');
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }, 2000);
+    });
+
+    // Navbar background change on scroll
+    const nav = document.querySelector('.navbar');
+    function handleNavbar() {
+      if (window.scrollY > 40) {
+        nav.classList.add('navbar-scrolled');
+      } else {
+        nav.classList.remove('navbar-scrolled');
+      }
+    }
+    window.addEventListener('scroll', handleNavbar);
+    handleNavbar();
+
+    // Active nav links on scroll (basic)
+    const sections = document.querySelectorAll('section, header.hero');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    function setActiveNav() {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 120;
+        if (pageYOffset >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    }
+    window.addEventListener('scroll', setActiveNav);
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <script>
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    // Validate required fields
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    status.style.color = 'var(--text-muted)';
+    status.textContent = 'Sending...';
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        form.reset();
+        status.style.color = '#4ade80'; // green success
+        status.textContent = 'Thanks! Your message has been sent.';
+      } else {
+        status.style.color = '#f87171'; // red error
+        status.textContent = 'Oops! Something went wrong. Please try again.';
+      }
+
+    } catch (error) {
+      status.style.color = '#f87171';
+      status.textContent = 'Network error. Please try again.';
+    }
+  });
+</script>
+
+</body>
+</html>
 
